@@ -1,0 +1,185 @@
+\documentclass[a4paper]{abntex2}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{multicol,multirow}
+\usepackage[bottom=2.5cm,top=2.5cm,left=2.0cm,right=2.0cm]{geometry}
+\usepackage{indentfirst}
+\usepackage{hyperref}  %%%%
+\hypersetup{colorlinks,citecolor=black,filecolor=blacke,linkcolor=blue,urlcolor=blue} %%%%
+\renewcommand\thesection{\arabic{section}} % não inclui capítulo na mumeração da seção
+\setcounter{page}{0} % não conta a numeração da capa
+\pagestyle{myheadings} %numerar página sem títulos extras
+\usepackage[abnt-emphasize=bf,alf,bibjustif,versalete]{abntex2cite}
+\usepackage{lipsum} % pacote para escrever texto aleatório.
+
+\usepackage{xcolor}
+\usepackage{here}
+\usepackage{hyperref}
+
+\usepackage{array} % Para opções de formatação de colunas
+
+\begin{document}
+
+% --- Inclusão da capa ---
+\input{capa.tex}
+
+\section{GitHub}
+
+\href{https://github.com/arthurcezarmol/projeto-POO-Dev}{Clique aqui} para ser redirecionado ao repositório onde o projeto está.
+
+\section{Descrição do sistema}
+
+Linguagem para o back-end (e orientação a objetos) \textbf{Java} utilizando o framework \textbf{Springboot}.
+
+Para o front-end será usado \textbf{React}.
+
+Para o banco de dados será usado \textbf{Postgree}.
+
+O sistema que será criado é uma plataforma interativa para o projeto PEA-Pescarte. O intuito desse sistema é criar uma plataforma onde os pescadores artesanais que participam do projeto possam logar, interagir com a plataforma e utilizar os serviços que serão fornecidos pela plataforma, como o de controle de gastos e lucro, além de informações gerais.
+
+O sistema visa buscar fornecer serviços aos pescadores artesanais de modo a facilitar a vida deles, além de torná-los mais conectados.
+
+As funcionalidades que estarão presentes no sistema são: 
+
+\begin{itemize}
+    \item Página \textbf{Home}: contendo as informações principais e mais relevantes do momento no site;
+    \item Página \textbf{Login}: contendo a tela de login e criação de conta;
+    \item Página \textbf{Serviços}: contendo serviços que podem vir a ser relevantes para os pescadores, como indicações de lojas como fábricas de gelo, lojas de artigos de pesca, informações sobre transporte, serviço de mecânico para os barcos;
+    \item Página \textbf{Clima}: contendo informações sobre a previsão do tempo para o dia, se existe possibilidade de chuva, velocidade do vento, dentre outros;
+    \item Página \textbf{Financeiro}: que faz um "controle" do financeiro dos pescadores, nessa página eles vão poder inserir o que pescaram e a aplicação vai fazer uma estimativa de por quanto eles deveriam vender os peixes baseado em informações estaduais e federais. Além disso, também uma opção de gerar uma planilha financeira com os gastos e lucros dos mesmos;
+    \item Página \textbf{Sobre}: essa página vai conter as informações sobre o que é o projeto PEA-Pescarte.
+\end{itemize}
+
+\subsection{O que é o projeto PEA-Pescarte}
+
+O Projeto PESCARTE tem como sua principal finalidade a criação de uma rede social regional integrada por pescadores artesanais e por seus familiares, buscando, por meio de processos educativos, promover, fortalecer e aperfeiçoar a sua organização comunitária e a sua qualificação profissional, bem como o seu envolvimento na construção participativa e na implementação de projetos de geração de trabalho e renda.
+
+O Projeto de Educação Ambiental Pescarte (PEA Pescarte) trabalha junto às \textbf{comunidades de pesca artesanal} de Arraial do Cabo, Búzios, Cabo Frio, Campos, Carapebus, Macaé, Rio das Ostras, Quissamã, São Francisco de Itabapoana e São João da Barra. Desde 2014, atua juntamente aos pescadores artesanais e seus familiares, por meio de processos educativos, promovendo, fortalecendo e aperfeiçoando a organização comunitária e a sua qualificação profissional, bem como o seu envolvimento na construção participativa e na implementação de projetos de geração de trabalho e renda.
+
+O processo educativo é realizado nos 10 municípios e se dá através de oficinas com temas diversos, entre eles: economia solidária, cooperativismo, políticas públicas, licenciamento ambiental, letramento digital e gestão participativa. O projeto promove, também, articulações entre os pescadores e pescadoras, com reuniões do Grupo de Trabalho, Grupo Gestor, Grupo de Acompanhamento de Obras e assembleias municipais.
+
+\section{Requisitos funcionais e não funcionais}
+
+\subsection{Requisitos funcionais}
+
+Definem a \textbf{funcionalidade} que o sistema a ser desenvolvido deverá ter. Ele é um requisito relacionado com um tipo de comportamento produto de uma função do sistema.
+
+Os requisitos funcionais deste projeto são:
+
+\begin{itemize}
+    \item Cadastrar usuários;
+    \item Realizar login;
+    \item Transmitir dados;
+    \item Exibir informações do usuário;
+    \item Mostrar serviços;
+    \item Gerar documentos;
+    \item Consultar documentos.
+\end{itemize}
+
+Os requisitos funcionais se relacionam diretamente a processos\footnote{processos = verbos} que o sistema deve executar. Ex: pesquisar, cadastrar, relatar, verificar, imprimir.
+
+\subsection{Requisitos não-funcionais}
+
+Indicam propriedades comportamentais que o sistema deve possuir.
+
+Os requisitos não-funcionais deste sistema são:
+
+\begin{itemize}
+    \item Poder acessar a aplicação usando qualquer navegador;
+    \item Poder acessar a aplicação usando qualquer dispositivo: celular, tablet ou computador (responsividade);
+    \item Aplicação com informações expostas de modo que pessoas com dificuldade de usar elementos da tecnologia possa acessá-lo sem problemas (acessibilidade com botões e textos grandes e intuitivos);
+    \item Boa formatação, legibilidade e confiabilidade dos documentos gerados pelo sistema;
+    \item Usuários poderem fazer login somente atrelados a uma Corporativa.
+\end{itemize}
+
+\section{Diagrama de classes inicial}
+
+\subsection{Diagrama de classes (UML)}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{imagens/UML POO DEV.png}
+    \caption{Diagrama UML do projeto}
+    \label{fig:uml-projeto}
+\end{figure}
+
+\subsection{Diagrama entidade relacionamento (ER)}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{imagens/Diagrama ER de banco de dados.png}
+    \caption{Diagrama ER do projeto}
+    \label{fig:er-projeto}
+\end{figure}
+
+\section{Fluxo básico de funcionamento}
+
+\subsection{Diagrama de casos de uso}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{imagens/Caso de Uso POO DEV.png}
+    \caption{Diagrama de Casos de Uso do projeto}
+    \label{fig:casos-de-uso-projeto}
+\end{figure}
+
+\section{Orçamento}
+
+\subsection{Custo do desenvolvimento}
+
+Cobrando R\$100,00 a hora. Por dia seriam utilizadas pelo menos 2 horas de trabalho, considerando que seriam trabalhados 5 dias da semana no mínimo 1 hora durante 3 meses, o custo final do desenvolvimento seria por volta de R\$3000,00.
+
+\subsection{Custo de manutenção}
+
+Mensalmente seria cobrado o custo mensal da hospedagem do site, que seria cerca de R\$300,00. Além do custo mensal de manutenção, que seria cerca de 2 horas de trabalho por mês exclusivamente para manutenção, o que sairia cerca de R\$200,00. Resultando um total de R\$500,00 mensais.
+
+\subsection{Custo total}
+
+O preço total do projeto sairia pelo preço total R\$3000,00 mais R\$500,00 por mês que o cliente continuar contratando os serviços de manutenção.
+
+\section{Cronograma detalhado por semana}
+
+\textbf{Semana 1} - 15/09 - 19/09: criação do modelo do front-end.
+
+\textbf{Semana 2} - 22/09 - 26/09: criação das classes do sistema.
+
+\textbf{Semana 3} - 29/09 - 03/10: criação e população do banco de dados.
+
+\textbf{Semana 4} - 06/10 - 10/10: aprimoramento do front-end.
+
+\textbf{Semana 5} - 13/10 - 17/10: aprimoramento do back-end.
+
+\textbf{Semana 6} - 20/10 - 24/10: aprimoramento do back-end.
+
+\textbf{Semana 7} - 27/10 - 31/10: aprimoramento do back-end.
+
+\textbf{Semana 8} - 03/11 - 07/11: aprimoramento do front-end.
+
+\textbf{Semana 9} - 10/11 - 14/11: aprimoramento do front-end.
+
+\textbf{Semana 10} - 17/11 - 21/11: conexão entre front-end, back-end e banco de dados.
+
+\textbf{Semana 11} - 24/11 - 28/11: revisão geral e melhorias pontuais.
+
+\textbf{Semana 12} - 01/12 - 03/12: entrega do projeto pronto.
+
+\section{TESTE}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{\textbf{Cronograma de Estudos}} & \textbf{Horário} & \textbf{Duração} \\
+\hline
+\textbf{Dia} & \textbf{Matéria} & & \\
+\hline
+Segunda & Matemática & 9:00 - 10:30 & 1h30 \\
+\hline
+Terça & Português & 14:00 - 15:00 & 1h00 \\
+\hline
+Quinta & Biologia & 16:00 - 17:00 & 1h00 \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}

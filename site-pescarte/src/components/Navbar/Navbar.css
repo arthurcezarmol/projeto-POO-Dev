@@ -1,0 +1,46 @@
+.navbar {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    background-color: #0039a6;
+    padding: 2rem 1rem;
+    color: white;
+}
+
+.nav-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;   /* Retira as bolinhas da lista */
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    background-color: rgb(86, 86, 185);
+    padding: 0.8rem;
+    margin-left: 1.5rem;    /* Espaçamento entre os itens do menu */
+    border-radius: 8px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;      /* Tira o underline */
+    font-size: 1.1rem;
+    transition: color 0.3s ease;    /* Efeito suave na mudança de cor (do hover) */
+}
+
+.nav-link:hover {
+    color: #72a6f9;
+}
+
+.nav-link.active {
+  color: #72a6f9;
+  border-bottom: 2px solid #61dafb;
+  padding-bottom: 4px;
+}

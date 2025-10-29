@@ -21,6 +21,22 @@
 \usepackage{booktabs}   % para linhas mais bonitas
 \usepackage{array} % Para opções de formatação de colunas / formatar colunas
 
+\usepackage{listings}
+% Configurando o estilo global do Java
+\lstset{
+  language=Java,
+  basicstyle=\ttfamily\small,      % Fonte e tamanho do código
+  keywordstyle=\color{blue},      % Cor das palavras-chave (ex: public, class, static)
+  commentstyle=\color{gray},      % Cor dos comentários
+  stringstyle=\color{red},        % Cor das strings (ex: "Hello, World!")
+  showstringspaces=false,         % Não mostrar espaços em strings de forma especial
+  numbers=left,                   % Numerar linhas à esquerda
+  numberstyle=\tiny\color{gray},  % Estilo dos números de linha
+  breaklines=true,                % Quebrar linhas longas automaticamente
+  frame=single,                   % Adicionar uma moldura ao redor do código
+  captionpos=b                    % Posição da legenda (b=bottom)
+}
+
 \begin{document}
 
 % --- Inclusão da capa ---
@@ -221,5 +237,50 @@ Além disso, também foi feito o que foi proposto para a Semana 2: foram criadas
     \caption{Estrutura do Banco de Dados}
     \label{fig:estrutura-banco-de-dados}
 \end{figure}
+
+\subsection{Quarta semana}
+
+\textbf{Objetivo}: Planejamento do modelo do back-end
+
+\textbf{Realizado}: Foi criada a estrutura do back-end, como é possível ver na figura \ref{fig:estrutura-back-end}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{imagens/estrutura-back-end.png}
+    \caption{Estrutura do Back-end}
+    \label{fig:estrutura-back-end}
+\end{figure}
+
+Além disso também foram criadas tuplas para começar a popular as tabelas do banco de dados.
+
+\subsection{Quinta semana}
+
+\textbf{ATRASO}
+
+\subsection{Sexta semana}
+
+\textbf{ATRASO}
+
+\subsection{Sétima semana}
+
+\textbf{Objetivo:} Aprimoramento do back-end
+
+\textbf{Realizado:} Configuração da conexão do banco de dados com o back-end, como podemos no código \ref{code:config-bd}
+
+\begin{lstlisting}[caption={Conexão banco de dados com back-end}, label={code:config-bd}]
+// Configuracao do PostgreSQL
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.username=postgres
+spring.datasource.password=190603
+spring.datasource.url=jdbc:postgresql://localhost:5432/pescarte
+spring.jpa.generate-ddl=true
+
+// Configuracao do Hibernate (JPA)
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+\end{lstlisting}
+
+
 
 \end{document}

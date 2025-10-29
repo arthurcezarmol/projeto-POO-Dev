@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Log files
+*.log
+
 ### STS ###
 .apt_generated
 .classpath

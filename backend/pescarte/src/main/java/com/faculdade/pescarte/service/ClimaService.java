@@ -29,7 +29,7 @@ public class ClimaService {
     // Por enquanto vai ficar estática a cidade, depois vou passar a cidade como parametro
     // OBS: DTO = Data Transfer Object
     public ClimaDTO buscarClima() {
-        String cidade = "Rio de Janeiro";
+        String cidade = "London";
 
         // O UriComponentsBuilder ajuda a montar a URL de forma segura
         // Aqui está a estrutura da URL da API
@@ -42,17 +42,26 @@ public class ClimaService {
 
         try {
             // Faz a chamada GET e pede o resultado como JsonNode
-            JsonNode root = restTemplate.getForObject(url, JsonNode.class);
+            JsonNode resposta = restTemplate.getForObject(url, JsonNode.class);
+
+            // Cria um novo objeto para clima
+            ClimaDTO clima =  new ClimaDTO();
 
             // Navega na árvore do JSON para pegar os dados que queremos
-            String nomeCidade = root.path("name").asText();
-            String descricao = root.path("weather").get(0).path("description").asText();
-            double temperatura = root.path("main").path("temp").asDouble();
+            clima.setCidade(resposta.get("name").asText());
+            clima.setPais(resposta.get("sys").get("country").asText());
+            clima.setTemperatura(resposta.get("main").get("temp").asDouble());
+            clima.setUmidade(resposta.get("main").get("humidity").asInt());
+            clima.setPressao(resposta.get("main").get("pressure").asInt());
+            clima.setDescricao(resposta.get("weather").get(0).get("description").asText());
+            clima.setVelocidadeVento(resposta.get("wind").get("speed").asDouble());
+            clima.setDirecaoVento(resposta.get("wind").get("deg").asDouble());
+            clima.setNebulosidade(resposta.get("clouds").get("all").asInt());
 
-            // Retorna o DTO
-            return new ClimaDTO(nomeCidade, temperatura, descricao);
+            // Retorna o DTO (clima)
+            return clima;
 
-        } catch (Exception e) {
+        } catch (Exception e) {     // COLOCAR MAIS TRATAMENTO DE ERROS DEPOIS
             // Tratamento de erros simples
             e.printStackTrace();
             throw new RuntimeException("Erro ao buscar dados do clima: " + e.getMessage());

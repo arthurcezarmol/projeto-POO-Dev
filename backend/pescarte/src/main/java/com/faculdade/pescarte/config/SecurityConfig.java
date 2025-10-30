@@ -31,7 +31,7 @@ public class SecurityConfig {
                 // Configura as regras de autorização
                 .authorizeHttpRequests(authorize -> authorize
                     // Permite acesso público ao endpoint /api/clima
-                    .requestMatchers("/api/clima").permitAll()
+                    .requestMatchers("/api/clima/**").permitAll()
 
                     // Permite acesso público ao endpoint de login
                     .requestMatchers("/api/auth/**").permitAll()

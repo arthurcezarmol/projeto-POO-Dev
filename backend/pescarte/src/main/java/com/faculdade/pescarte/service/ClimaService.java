@@ -1,4 +1,4 @@
-package service;
+package com.faculdade.pescarte.service;
 
 import com.faculdade.pescarte.dto.ClimaDTO;
 

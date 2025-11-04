@@ -242,7 +242,7 @@ Além disso, também foi feito o que foi proposto para a Semana 2: foram criadas
 
 \textbf{Objetivo}: Planejamento do modelo do back-end
 
-\textbf{Realizado}: Foi criada a estrutura do back-end, como é possível ver na figura \ref{fig:estrutura-back-end}.
+\textbf{Realizado}: Foi definida a estrutura do back-end, como é possível ver na figura \ref{fig:estrutura-back-end}.
 
 \begin{figure}[H]
     \centering
@@ -252,6 +252,16 @@ Além disso, também foi feito o que foi proposto para a Semana 2: foram criadas
 \end{figure}
 
 Além disso também foram criadas tuplas para começar a popular as tabelas do banco de dados.
+
+O desenvolvimento em SpringBoot segue a arquitetura MVC (Model-View-Controller). 
+
+A camada \textbf{Model} (Modelo) é responsável por representar a lógica de negócios, os dados da aplicação e a interação com o banco de dados. 
+
+A \textbf{Repository} serve como uma interface para abstrair a camada de acesso a dados, facilitando a interação com o banco de dados sem que a lógica de negócio tenha que se preocupar com os detalhes da persistência, ele fornece métodos para operações de CRUD (Criar, Ler, Atualizar, Excluir) e consultas, que são implementados automaticamente pelo Spring Data JPA. 
+
+A \textbf{Service} é uma camada para implementar a lógica de negócios da aplicação, atuando como intermediário entre a camada de apresentação (Controller) e a camada de persistência (Repository). Ele encapsula as regras de negócio, coordena as operações e abstrai a complexidade do acesso ao banco de dados, promovendo uma aplicação mais modular, organizada e fácil de testar. 
+
+E a \textbf{Controller} serve como o ponto de entrada para as requisições de uma aplicação, processando as solicitações HTTP e retornando respostas apropriadas para o cliente. Ela define os endpoints (as rotas da API), como GET, POST, PUT e DELETE, que expõem a funcionalidade do backend para o mundo exterior. Ao receber uma requisição, o controller chama a lógica de negócios na camada de serviço e, em seguida, converte os dados de entrada e saída para formatos como JSON ou XML.
 
 \subsection{Quinta semana}
 
@@ -265,24 +275,358 @@ Além disso também foram criadas tuplas para começar a popular as tabelas do b
 
 \textbf{Objetivo:} Aprimoramento do back-end
 
-\textbf{Realizado:} Configuração da conexão do banco de dados com o back-end, como podemos no código \ref{code:config-bd}
+\textbf{Realizado:} 
+
+Foi feita a criação do projeto utilizando as seguintes dependências:
+
+\begin{itemize}
+    \item Spring Web: Para criar os controladores REST (endpoints da API);
+    \item Spring Security: Para cuidar da página de Login e proteger endpoints;
+    \item Spring Data JPA: Para se comunicar com o banco de dados (ex: para salvar usuários);
+    \item PostgreSQL Driver: Driver para poder conectar o banco PostgreSQL;
+    \item Lombok: Facilita a escrita de classes (reduz boilerplate).
+\end{itemize}
+
+Foi configurada a conexão do back-end com o banco de dados, como podemos ver no código \ref{code:config-bd}
 
 \begin{lstlisting}[caption={Conexão banco de dados com back-end}, label={code:config-bd}]
 // Configuracao do PostgreSQL
 spring.datasource.driver-class-name=org.postgresql.Driver
 spring.datasource.username=postgres
 spring.datasource.password=190603
-spring.datasource.url=jdbc:postgresql://localhost:5432/pescarte
+spring.datasource.url=jdbc:postgresql://localhost:5432/banco-pescarte
 spring.jpa.generate-ddl=true
 
 // Configuracao do Hibernate (JPA)
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-spring.jpa.hibernate.ddl-auto=update
+spring.jpa.hibernate.ddl-auto=validate
 spring.jpa.show-sql=true
+
+// Define o schema padrao do banco de dados para o Hibernate
+spring.jpa.properties.hibernate.default_schema=pescarte
 \end{lstlisting}
 
-Começo da implementação da função "Clima" no back-end (DETALHAR ISSO MELHOR)
+\section*{Criando as funcionalidades}
 
-Fazer a conexão do front-end com o back-end
+\subsection*{Clima}
+
+A primeira funcionalidade adicionada foi a de Clima, visto que ela é a mais fácil de configurar pois é "externa" à aplicação, visto que ela vai buscar informações de uma API. 
+
+A API que utilizada é a OpenWeatherMap.
+
+Primeiro de tudo eu configurei a key da API, como podemos ver no código \ref{code:config-key-api}.
+
+\begin{lstlisting}[caption={Configuração key da API}, label={code:config-key-api}]
+
+// Chave do OpenWeatherMap
+weather.api.key=${WEATHER_API_KEY}
+// O Spring vai procurar pela variavel de ambiente chamada 'WEATHER_API_KEY' (seguranca da key)
+
+// URL base da API
+weather.api.url=https://api.openweathermap.org/data/2.5/weather
+
+\end{lstlisting}
+
+\textbf{OBS:} para configurar a chave eu utilizei a variável de ambiente "WEATHER\_API\_KEY", porque na hora de subir o código para o GitHub ele vai subir a variável de ambiente e não a chave (que é privada). Além disso, essa "URL base da API" é a estrutura base de consulta, quando for para uma cidade específica ela ira mudar, mas baseada nela. O formato básico da URL é: \url{https://api.openweathermap.org/data/2.5/weather?q={CIDADE}&appid={API_KEY}&lang=pt_br&units=metric}
+
+Após configurar a chave eu criei um Service (que contém as regras de negócio/funcionalidades) e um Controller (que é onde ficam os controladores REST) para a função clima, sendo eles ClimaService e ClimaController, respectivamente.
+
+\subsection*{Configurando o ClimaService}
+
+Nele eu usei o RestTemplate, que vai chamar a API do OpenWeatherMap. O RestTemplate simplifica o processo de fazer requisições HTTP para API's externas. 
+
+Criei um AppConfig para configurar o RestTemplate que vai ser um Bean, para que ele possa ser reutilizado:
+
+\begin{lstlisting}
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+\end{lstlisting}
+
+O código do ClimaService é:
+
+\begin{lstlisting}
+@Service
+public class ClimaService {
+    // Injetando o Bean "RestTemplate"
+    private final RestTemplate restTemplate;
+
+    // Pega os valores do application.properties
+    @Value("${weather.api.key}")
+    private String apiKey;
+
+    @Value("${weather.api.url}")
+    private String apiUrl;
+
+    // Injecao de dependencia (via construtor)
+    public ClimaService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    // Buscando o clima de uma cidade
+    // Por enquanto vai ficar estatica a cidade, depois vou passar a cidade como parametro
+    // OBS: DTO = Data Transfer Object
+    public ClimaDTO buscarClima() {
+        String cidade = "London";
+
+        // O UriComponentsBuilder ajuda a montar a URL de forma segura
+        // Aqui esta a estrutura da URL da API
+        String url = UriComponentsBuilder.fromHttpUrl(apiUrl)
+                .queryParam("q", cidade)
+                .queryParam("appid", apiKey)
+                .queryParam("units", "metric") // Para temperatura em Celsius
+                .queryParam("lang", "pt_br")   // Para descricao em portugues
+                .toUriString();
+
+        try {
+            // Faz a chamada GET e pede o resultado como JsonNode
+            JsonNode resposta = restTemplate.getForObject(url, JsonNode.class);
+
+            // Cria um novo objeto para clima
+            ClimaDTO clima =  new ClimaDTO();
+
+            // Navega na arvore do JSON para pegar os dados que queremos
+            clima.setCidade(resposta.get("name").asText());
+            clima.setPais(resposta.get("sys").get("country").asText());
+            clima.setTemperatura(resposta.get("main").get("temp").asDouble());
+            clima.setUmidade(resposta.get("main").get("humidity").asInt());
+            clima.setPressao(resposta.get("main").get("pressure").asInt());
+            clima.setDescricao(resposta.get("weather").get(0).get("description").asText());
+            clima.setVelocidadeVento(resposta.get("wind").get("speed").asDouble());
+            clima.setDirecaoVento(resposta.get("wind").get("deg").asDouble());
+            clima.setNebulosidade(resposta.get("clouds").get("all").asInt());
+
+            // Retorna o DTO (clima)
+            return clima;
+
+        } catch (Exception e) {     // COLOCAR MAIS TRATAMENTO DE ERROS DEPOIS
+            // Tratamento de erros simples
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao buscar dados do clima: " + e.getMessage());
+        }
+    }
+}
+\end{lstlisting}
+
+Como podemos ver, nele eu injeto o RestTemplate e pego a chave da API e a URL base dela. Depois crio o construtor e crio um método para buscar o clima. Por hora a cidade está estática apenas para a realização de testes, e dentro do método eu uso o UriComponentsBuilder, que é uma classe pré-definida do Springboot para a construção dinâmica da URL. Depois eu faço a chamada GET e navego na árvore JSON (que é a resposta que a API me dá) e pego os valores dela e retorno para o usuário. 
+
+Além disso também fiz um tratamento de erros simples, por enquanto.
+
+\section*{Configurando a Segurança (SecurityConfig)}
+
+A configuração de segurança (código \ref{code:config-seguranca}) por enquanto não está completa, ela está feita com o objetivo de permitir testes de modo mais simples. A configuração final será diferente.
+
+Nessa classe é configurada as questões de segurança da aplicação, como a permissão de acesso à endpoints, quais requisições são permitidas e onde o front-end pode se conectar.
+
+\begin{lstlisting}[caption={Configuração inicial de segurança}, label={code:config-seguranca}]
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                // Habilita o CORS (que vai precisar para conectar com o React)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+                // Desabilita CSRF (Cross Site Request Forgery)
+                .csrf(csrf -> csrf.disable())
+
+                // Define a politica de sessao como STATELESS (API REST nao guarda estado)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+                // Configura as regras de autorizacao
+                .authorizeHttpRequests(authorize -> authorize
+                    // Permite acesso publico ao endpoint /api/clima
+                    //.requestMatchers("/api/clima/**").permitAll()
+
+                    // Permite acesso publico ao endpoint de login
+                    //.requestMatchers("/api/auth/**").permitAll()
+
+                    // Para QUALQUER outra coisa, exige autenticacao
+                    //.anyRequest().authenticated()
+
+                        // LIBERANDO TODAS AS PERMISSOES PARA TESTAR REQUESTS (DEPOIS SERA IMPLEMENTADA A SEGURANCA)
+                        .anyRequest().permitAll()
+                );
+
+    return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+        // Porta que o React esta rodando
+        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+
+        // Requisicoes que ele pode realizar
+        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        corsConfiguration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);     // aplica a todos os endpoints
+        return source;
+    }
+}
+\end{lstlisting}
+
+\subsection*{Peixes}
+
+A próxima funcionalidade adicionada foi a de cadastrar Peixes, para testar se as requisições estão funcionando e se a conexão com o banco de dados está correta. 
+
+O software utilizado para realizar as requisições é o \textbf{Postman}.
+
+Primeiro eu criei o Model para Peixes:
+
+\begin{lstlisting}
+package com.faculdade.pescarte.model;
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+@Entity
+@Table(name = "peixes")
+@Data
+public class Peixes {
+    // Atributos (colunas do banco de dados)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_peixe")          // A coluna do banco se chama exatamente "id_peixe"
+    private Long id;
+
+    // Mapeando as colunas do banco de dados no codigo usando @Column
+    @Column(name = "tipopescado")       // A coluna do banco se chama exatamente "tipopescado"
+    String tipoPescado;
+
+    @Column(name = "pesopescado")       // A coluna do banco se chama exatamente "pesopescado"
+    Float pesoPescado;
+
+    @Column(name = "valorpescado")      // A coluna do banco se chama exatamente "valorpescado"
+    Float valorPescado;
+}
+
+\end{lstlisting}
+
+Depois eu criei o Repository para Peixes:
+
+\begin{lstlisting}
+package com.faculdade.pescarte.repository;
+
+import com.faculdade.pescarte.model.Peixes;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface PeixesRepository extends JpaRepository<Peixes, Long> {
+    // Spring JPA cria os metodos
+}
+\end{lstlisting}
+
+\textbf{JpaRepository} é uma interface do Spring Data JPA que fornece uma maneira simplificada de interagir com bancos de dados, oferecendo métodos para operações comuns de CRUD (Create, Read, Update, Delete) sem a necessidade de escrever consultas SQL manualmente.
+
+Depois eu criei o Service para Peixes:
+
+\begin{lstlisting}
+package com.faculdade.pescarte.service;
+
+import com.faculdade.pescarte.model.Peixes;
+import com.faculdade.pescarte.repository.PeixesRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class PeixesService {
+
+    // Criando um repositorio
+    private final PeixesRepository peixesRepository;
+
+    // Construtor da classe
+    public PeixesService(PeixesRepository peixesRepository) {
+        this.peixesRepository = peixesRepository;
+    }
+
+    // Metodos
+    // Metodo para mostrar todos os peixes
+    public List<Peixes> listarPeixes(){
+        return peixesRepository.findAll();
+    }
+
+    // OPERACOES REST
+
+    // Metodo para buscar um peixe pelo id
+    public Optional<Peixes> findById(Long id) {
+        return peixesRepository.findById(id);
+    }
+
+    // Metodo para salvar/cadastrar um peixe
+    public Peixes salvarPeixes(Peixes peixes) {
+        return peixesRepository.save(peixes);
+    }
+
+    // Metodo para deletar/remover um peixe pelo id
+    public void excluirPeixes(Long id) {
+        peixesRepository.deleteById(id);
+    }
+}
+\end{lstlisting}
+
+E por fim criei o Controller para Peixes:
+
+\begin{lstlisting}
+package com.faculdade.pescarte.controller;
+
+import com.faculdade.pescarte.model.Peixes;
+import com.faculdade.pescarte.service.PeixesService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/peixes")
+public class PeixesController {
+    private final PeixesService peixesService;
+
+    // Construtor
+    public PeixesController(PeixesService peixesService) {
+        this.peixesService = peixesService;
+    }
+
+    // Metodos
+    // Metodo GET para ver a lista de peixes
+    @GetMapping // sem endpoint. Se nao passar nada aqui ele chama o metodo por padrao quando /api/peixes for acessada
+    public List<Peixes> listarPeixes() {
+        return peixesService.listarPeixes();
+    }
+
+    // Metodo GET para passar o ID e me retornar o peixe
+    @GetMapping("/{id}")
+    public ResponseEntity<Peixes> buscarPeixesPorId(@PathVariable Long id) {
+        return peixesService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // Metodo POST para inserir no banco de dados
+    @PostMapping
+    public Peixes salvarPeixes (@RequestBody Peixes peixes) {
+        return peixesService.salvarPeixes(peixes);
+    }
+
+    // Metodo DELETE para deletar no banco de dados
+    @DeleteMapping("{id}")         // deletar por id
+    public ResponseEntity<Void> excluirPeixes(@PathVariable Long id) {
+        peixesService.excluirPeixes(id);
+        return ResponseEntity.noContent().build();
+    }
+}
+\end{lstlisting}
+
+Após todo esse processo o endpoint "/api/peixes" está funcionando.
 
 \end{document}

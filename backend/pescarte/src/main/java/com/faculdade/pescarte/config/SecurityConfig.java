@@ -31,16 +31,16 @@ public class SecurityConfig {
                 // Configura as regras de autorização
                 .authorizeHttpRequests(authorize -> authorize
                     // Permite acesso público ao endpoint /api/clima
-                    .requestMatchers("/api/clima/**").permitAll()
+                    //.requestMatchers("/api/clima/**").permitAll()
 
                     // Permite acesso público ao endpoint de login
-                    .requestMatchers("/api/auth/**").permitAll()
-
-                    // LINHA DE TESTES PARA O CRUD DE PEIXES, DEPOIS TROCAR POR SEGURANÇA REAL
-                    .requestMatchers("/api/peixes/**").permitAll()
+                    //.requestMatchers("/api/auth/**").permitAll()
 
                     // Para QUALQUER outra coisa, exige autenticação
-                    .anyRequest().authenticated()
+                    //.anyRequest().authenticated()
+
+                        // LIBERANDO TODAS AS PERMISSÕES PARA TESTAR REQUESTS (DEPOIS SERÁ IMPLEMENTADA A SEGURANÇA)
+                        .anyRequest().permitAll()
                 );
 
     return http.build();

@@ -413,6 +413,42 @@ Como podemos ver, nele eu injeto o RestTemplate e pego a chave da API e a URL ba
 
 Além disso também fiz um tratamento de erros simples, por enquanto.
 
+\subsection*{Configurando o ClimaController}
+
+O código do ClimaController é:
+
+\begin{lstlisting}
+package com.faculdade.pescarte.controller;
+
+import com.faculdade.pescarte.dto.ClimaDTO;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.faculdade.pescarte.service.ClimaService;
+
+@RestController
+@RequestMapping("/api/clima")
+@CrossOrigin(origins = "*")             // Serve para permitir conexao de dominio cruzado (possibilita conexao front e back)
+public class ClimaController {
+    private final ClimaService climaService;
+
+    // Construtor
+    public ClimaController(ClimaService climaService) {
+        this.climaService = climaService;
+    }
+
+    // GET
+    @GetMapping
+    public ClimaDTO getClima() {
+        // O Spring vai converter o ClimaDTO para JSON automaticamente
+        return climaService.buscarClima();
+    }
+}
+\end{lstlisting}
+
+Nele eu defino o meu endpoint (que é onde essa funcionalidade vai estar na aplicação), que no caso é "api/clima".
+
 \section*{Configurando a Segurança (SecurityConfig)}
 
 A configuração de segurança (código \ref{code:config-seguranca}) por enquanto não está completa, ela está feita com o objetivo de permitir testes de modo mais simples. A configuração final será diferente.

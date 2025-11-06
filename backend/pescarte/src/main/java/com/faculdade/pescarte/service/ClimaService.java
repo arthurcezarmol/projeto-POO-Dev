@@ -29,7 +29,7 @@ public class ClimaService {
     // Por enquanto vai ficar estática a cidade, depois vou passar a cidade como parametro
     // OBS: DTO = Data Transfer Object
     public ClimaDTO buscarClima() {
-        String cidade = "London";
+        String cidade = "Curitiba";
 
         // O UriComponentsBuilder ajuda a montar a URL de forma segura
         // Aqui está a estrutura da URL da API

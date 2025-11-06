@@ -1,10 +1,7 @@
 package com.faculdade.pescarte.controller;
 
 import com.faculdade.pescarte.dto.ClimaDTO;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.faculdade.pescarte.service.ClimaService;
 
 @RestController
@@ -19,9 +16,11 @@ public class ClimaController {
     }
 
     // GET
-    @GetMapping
-    public ClimaDTO getClima() {
+    @GetMapping         // Sem o ("/api/clima")
+    public ClimaDTO getClima(@RequestParam("cidade") String nomeCidade) {
+        // Agora tenho a variável `nomeCidade` (ex: "Rio de Janeiro")
+        // Vou usá-la para chamar a API de clima externa
         // O Spring vai converter o ClimaDTO para JSON automaticamente
-        return climaService.buscarClima();
+        return climaService.buscarClima(nomeCidade);
     }
 }

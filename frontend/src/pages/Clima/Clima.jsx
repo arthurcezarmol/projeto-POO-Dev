@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import axios from 'axios';      // Importa o axios (para conectar front e o back)
 import './Clima.css';
 
@@ -16,50 +16,114 @@ function Clima () {
 
 
     // 1. Cria um "estado" para guardar os dados do clima quando chegarem
-    const [clima, setClima] = useState(null);
-    const [erro, setErro] = useState(null);
+    const [clima, setClima] = useState(null);       // Guarda os estados do clima
+    const [erro, setErro] = useState(null);         // Guarda a mensagem de erro
+    const [loading, setLoading] = useState(false);  // Para mostrar "Carregando..."
+
+    // 1.1 ESTADO PARA O INPUT
+    // Guarda o que o usuário está digitando agora
+    const [cidadeInput, setCidadeInput] = useState('');
+
+    // 1.2 ESTADO PARA A BUSCA
+    // Guarda a última cidade que o usuário confirmou (clicou em "Buscar")
+    const [cidadeBuscada, setCidadeBuscada] = useState('');
 
     // 2. useEffect é um "hook" que roda o código DEPOIS que o componente aparece na tela.
     // O [] vazio no final significa "rode apenas uma vez".
+    // ALTERAÇÕES: ESTE HOOK AGORA RODA TODA VEZ QUE 'cidadeBuscada' MUDAR!
     useEffect(() => {
-        // 3. A chamada. ESTA É A CONEXÃO!
-        // Utilizo axios.get() para fazer uma requisição HTTP GET
-        axios.get('http://localhost:8080/api/clima')
+        // Não faz nada se nenhuma cidade foi buscada (evita rodar na primeira vez)
+        if (cidadeBuscada === '') {
+            return;
+        }
+
+        // Prepara para a nova busca:
+        setLoading(true);       // Ativa o "Carregando..."
+        setClima(null);         // Limpa o clima anterior
+        setErro(null);          // Limpa o erro anterior
+
+        // CHAMADA DINÂMICA
+        // A URL agora usa a cidade do estado
+        const urlAPI = `http://localhost:8080/api/clima?cidade=${cidadeBuscada}`;
+
+        axios.get(urlAPI)
             .then(response => {
-                // 4. SUCESSO! Spring respondeu.
-                // Guardo os dados (response.data) no estado.
                 setClima(response.data);
             })
             .catch(error => {
-                // 5. ERRO! Algo deu errado.
                 console.error('Erro ao buscar dados do clima!', error);
-                setErro('Não foi possível carregar o clima.');
+                setErro('Cidade não encontrada ou erro na API');
+            })
+            .finally(() => {
+                // Termina o carregamento, independente do sucesso ou erro
+                setLoading(false);
             });
-    }, []); // O [] vazio garante que isso rode só uma vez
+    }, [cidadeBuscada]);    // O "gatilho" do useEffect
 
+    // 5. Função de Submit
+    const handleSubmit = (event) => {
+        // A. Impede o recarregamento da página
+        event.preventDefault();
 
-    // 6. Renderização 
-    if(erro) {
-        return <p>{erro}</p>;
+        // B. Define a cidade que queremos buscar (disparando o useEffect)
+        setCidadeBuscada(cidadeInput);
     }
 
-    if(!clima){
-        return <p>Carregando clima...</p>;
-    }
-
-    // 7. SUCESSO: Mostra os dados que vieram do Spring!
+    // 6. SUCESSO: Mostra os dados que vieram do Spring!
     return (
-        <div>
+        <>
+            <main>
+                <h1>Clima</h1>
+
+                {/* Conectamos o formulário ao React:
+                 - onSubmit chama nossa função handleSubmit
+                 - O <input> usa 'value' e 'onChange'
+                */}
+                <form onSubmit={handleSubmit}>
+                    <div className='form-group'>
+                        <input type="text" 
+                        className='form-control'
+                        placeholder='Digite o nome da cidade'
+                        required
+                        value={cidadeInput}     // O valor do input é controlado pelo React
+                        onChange={(e) => setCidadeInput(e.target.value)}    // Atualiza o estado a cada tecla
+                        // e - evento que está acontecendo (no caso é change) | 
+                        // target é o elemento que desencadeia o evento (no caso é input) |
+                        // value é o elemento do input onChange
+                        />
+                    </div>
+                    <button type='submit' className='button-submit'>Descobrir clima</button>
+                </form>
+            </main>
+
+            {/* --- ÁREA DO RESULTADO --- */}
+
+            {/* Mostra "Carregando..." durante a busca */}
+            {loading && <p>Carregando clima...</p>}             {/* Dentro do JSX, qualquer código JS tem que estar entre {} */}
+
+            {/* Mostra o erro, se houver */}
+            {erro && <p className='erro-clima'>{erro}</p>}
+
+            {/* Mostra o clima, APENAS se tiver dados (clima não é null) */}
             {/* O nome das variáveis tem que ser O MESMO das variáveis no meu climaDTO!!! */}
-            <h1>Clima em: {clima.cidade} - {clima.pais}</h1>
-            <p>Temperatura: {clima.temperatura}°C</p>
-            <p>Umidade: {clima.umidade}</p>
-            <p>Pressão: {clima.pressão} Pascal (Pa)</p>
-            <p>Descrição: {clima.descricao}</p>
-            <p>Velocidade do vento: {clima.velocidadeVento} Km/h</p>
-            <p>Direção do vento: {clima.direcaoVento}°</p>
-            <p>Nebulosidade: {clima.nebulosidade}</p>
-        </div>
+            {clima && (
+                <div className='clima-container'>
+                    <h1 className='clima-titulo'>Clima em: {clima.cidade} - {clima.pais}</h1>
+                    <p className='clima-info'>
+                        Temperatura:
+                        <span className='{getClasseTemperatura(clima.temperatura)}'>
+                            {clima.temperatura}°C
+                        </span>
+                    </p>
+                    <p className='clima-info'>Umidade: {clima.umidade}</p>
+                    <p className='clima-info'>Pressão: {clima.pressão} Pascal</p>
+                    <p className='clima-descricao'>Descrição: {clima.descricao}</p>
+                    <p className='clima-info'>Velocidade do vento: {clima.velocidadeVento} Km/h</p>
+                    <p className='clima-info'>Direção do vento: {clima.direcaoVento}°</p>
+                    <p className='clima-info'>Nebulosidade: {clima.nebulosidade}</p>
+                </div>
+            )}
+        </>
     );
 }
 

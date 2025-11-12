@@ -1,0 +1,91 @@
+@charset "utf-8";
+
+.form-group {
+    padding: 10px;
+    margin: 10px;
+}
+
+.form-control {
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.button-submit {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(166, 160, 255);
+}
+
+/* Estilo para o container principal */
+.clima-container {
+    background-color: #f4f8ff; /* Um azul bem claro */
+    border: 1px solid #d1e3ff;
+    border-radius: 8px;        /* Bordas arredondadas */
+    padding: 20px;             /* Espaçamento interno */
+    margin: 20px auto;         /* Centraliza o card na página */
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Uma sombra leve */
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo para o título */
+.clima-titulo {
+    color: #0056b3; /* Um azul escuro */
+    border-bottom: 2px solid #0056b3; /* Uma linha embaixo */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.clima-titulo-principal {
+    color: #0056b3;
+}
+
+/* Estilo para as informações gerais */
+.clima-info {
+    font-size: 16px;
+    color: #333; /* Cor de texto padrão */
+    line-height: 1.5; /* Espaçamento entre linhas */
+    padding: 3px;
+}
+
+/* Estilo específico para a descrição (em itálico) (REVISAR ISSO) */
+/*.clima-descricao {
+    font-style: italic;
+    color: #555;
+    line-height: 1.5;
+}*/
+
+/* Estilo para a mensagem de erro */
+.erro-clima {
+    color: #D8000C; /* Vermelho */
+    background-color: #FFD2D2; /* Fundo vermelho claro */
+    border: 1px solid #D8000C;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 20px auto;
+    max-width: 500px;
+}
+
+/* Estes estilos vão se aplicar APENAS ao <span>
+  Eles vão sobrescrever a cor do .clima-info */
+
+.temp-baixa {
+    color: #007bff; /* Um azul frio */
+    font-weight: bold;
+    padding-left: 5px; /* Só para dar um espacinho */
+}
+
+.temp-media {
+    color: #28a745; /* Um verde neutro */
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+.temp-alta {
+    color: #dc3545; /* Um vermelho quente */
+    font-weight: bold;
+    padding-left: 5px;
+}

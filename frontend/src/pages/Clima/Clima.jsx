@@ -14,6 +14,24 @@ function Clima () {
         return 'temp-media';            // Entre 15°C e 28°C é normal
     };
 
+    // Lógica para decidir qual vai ser a direção do vento baseado no valor recebido (VERIFICAR LÓGICA)
+    const getClasseDirecaoVento = (dir) => {
+        switch (dir) {
+            case 0 || 360:
+                return "Norte";
+                break;
+            case 90:
+                return "Leste";
+                break;
+            case 180:
+                return "Sul";
+                break;
+            case 270:
+                return "Oeste";
+                break;
+        }
+    }
+
 
     // 1. Cria um "estado" para guardar os dados do clima quando chegarem
     const [clima, setClima] = useState(null);       // Guarda os estados do clima
@@ -73,7 +91,7 @@ function Clima () {
     return (
         <>
             <main>
-                <h1>Clima</h1>
+                {/* <h1 className='clima-titulo-principal'>Clima</h1> */}
 
                 {/* Conectamos o formulário ao React:
                  - onSubmit chama nossa função handleSubmit
@@ -110,14 +128,14 @@ function Clima () {
                 <div className='clima-container'>
                     <h1 className='clima-titulo'>Clima em: {clima.cidade} - {clima.pais}</h1>
                     <p className='clima-info'>
-                        Temperatura:
-                        <span className='{getClasseTemperatura(clima.temperatura)}'>
+                        Temperatura: 
+                        <span className={getClasseTemperatura(clima.temperatura)}>
                             {clima.temperatura}°C
                         </span>
                     </p>
                     <p className='clima-info'>Umidade: {clima.umidade}</p>
                     <p className='clima-info'>Pressão: {clima.pressão} Pascal</p>
-                    <p className='clima-descricao'>Descrição: {clima.descricao}</p>
+                    <p className='clima-info'>Descrição: {clima.descricao}</p>
                     <p className='clima-info'>Velocidade do vento: {clima.velocidadeVento} Km/h</p>
                     <p className='clima-info'>Direção do vento: {clima.direcaoVento}°</p>
                     <p className='clima-info'>Nebulosidade: {clima.nebulosidade}</p>

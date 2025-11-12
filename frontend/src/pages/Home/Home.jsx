@@ -1,3 +1,6 @@
+import React, { useState, useEffect, use } from 'react';
+import axios from 'axios';      // Importa o axios (para conectar front e o back)
+
 function Home () {
     return (
         <>

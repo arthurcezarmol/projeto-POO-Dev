@@ -1,6 +1,7 @@
 import React, { useState, useEffect, use } from 'react';
 import axios from 'axios';      // Importa o axios (para conectar front e o back)
 import './Clima.css';
+import ImagemMain from "../../imagens/imagem-pescador-main.jpg"
 
 function Clima () {
     // Lógica para decidir qual classe CSS usar (para temperatura) (AINDA NÃO ESTÁ IMPLEMENTADA)
@@ -91,7 +92,8 @@ function Clima () {
     return (
         <>
             <main>
-                {/* <h1 className='clima-titulo-principal'>Clima</h1> */}
+            
+                <h1 className='clima-titulo-principal'>Clima</h1>
 
                 {/* Conectamos o formulário ao React:
                  - onSubmit chama nossa função handleSubmit
@@ -133,12 +135,12 @@ function Clima () {
                             {clima.temperatura}°C
                         </span>
                     </p>
-                    <p className='clima-info'>Umidade: {clima.umidade}</p>
-                    <p className='clima-info'>Pressão: {clima.pressão} Pascal</p>
+                    <p className='clima-info'>Umidade: {clima.umidade}%</p>
+                    {/*<p className='clima-info'>Pressão: {clima.pressão} Pascal</p>*/}
                     <p className='clima-info'>Descrição: {clima.descricao}</p>
                     <p className='clima-info'>Velocidade do vento: {clima.velocidadeVento} Km/h</p>
                     <p className='clima-info'>Direção do vento: {clima.direcaoVento}°</p>
-                    <p className='clima-info'>Nebulosidade: {clima.nebulosidade}</p>
+                    <p className='clima-info'>Nebulosidade: {clima.nebulosidade}%</p>
                 </div>
             )}
         </>

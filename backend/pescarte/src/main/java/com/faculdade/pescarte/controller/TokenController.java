@@ -2,13 +2,20 @@ package com.faculdade.pescarte.controller;
 
 import com.faculdade.pescarte.dto.LoginRequest;
 import com.faculdade.pescarte.dto.LoginResponse;
+import com.faculdade.pescarte.dto.UserDTO;
+import com.faculdade.pescarte.model.Usuarios;
 import com.faculdade.pescarte.repository.UsuariosRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +29,7 @@ public class TokenController {
     private final JwtEncoder jwtEncoder;
 
     // Injetando o repositório de Usuários
+    @Autowired
     private final UsuariosRepository  usuariosRepository;
 
     // Injetando o Bean do algoritmo que vai criptografar as senhas
@@ -64,5 +72,42 @@ public class TokenController {
        var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
        return ResponseEntity.ok(new LoginResponse(jwtValue, expiresIn));
+    }
+
+    // Retorna os dados do usuário autenticado no momento (baseado no token JWT).
+    @GetMapping("api/me")
+    public ResponseEntity<UserDTO> getAuthenticatedUser(Authentication authentication) {
+
+        // 1. Verificamos se o usuário está autenticado
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return new  ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        // 2. Pegamos o ID do usuário, que é o "subject" do token
+        // (Exatamente como é defindo no /api/login)
+        String userIdString = authentication.getName();
+        Integer userId;
+
+        try {
+            userId = Integer.valueOf(userIdString);     // Convertendo o ID (String) para Integer
+        } catch (NumberFormatException e) {
+            // Se o subject do token não for um número, é um token inválido
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        // 3. Buscamos a entidade 'Usuarios' completa do banco pelo ID
+        Usuarios usuario = usuariosRepository.findById(userId.longValue())
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com ID: " + userId));
+
+        // 4. Mapeamos a entidade 'Usuarios' para UserDTO (só os dados seguros, sem senha por exemplo)
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(usuario.getId());
+        userDTO.setNome(usuario.getNome());
+        userDTO.setCargo(usuario.getCargo());
+        userDTO.setIdade(usuario.getIdade());
+        userDTO.setCorporativa(usuario.getCorporativa());
+
+        // 5. Retornamos o DTO para o frontend
+        return ResponseEntity.ok(userDTO);
     }
 }

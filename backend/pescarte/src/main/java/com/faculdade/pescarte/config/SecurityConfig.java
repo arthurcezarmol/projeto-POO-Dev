@@ -60,6 +60,8 @@ public class SecurityConfig {
                     // Permite acesso público ao endpoint de login
                     .requestMatchers("/api/login/**").permitAll()
 
+                    //.requestMatchers("/api/servicos").permitAll()
+
                     // Para QUALQUER outra coisa, exige autenticação
                     .anyRequest().authenticated()
 

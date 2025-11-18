@@ -1,9 +1,22 @@
+import React from 'react';
+import ServicosMap from '../../components/ServicosMap'; 
+
+import './Servicos.css';
+
 function Servicos () {
     return (
-        <>
-            <h1>Servicos</h1>
-            <p>Aqui irão as funcionalidades de mostrar serviços para o usuário.</p>
-        </>
+        <div className="pagina-servicos"> 
+      
+            {/* Você pode adicionar um título ou texto que aparecerá acima do mapa */}
+            <h1>Encontre Serviços Úteis</h1>
+            <p>Navegue pelo mapa para encontrar fábricas de gelo, mecânicos e outros serviços essenciais para a pesca artesanal.</p>
+            
+            <hr />
+
+            {/* 3. Aqui você renderiza o componente do mapa! */}
+            <ServicosMap />
+
+        </div>
     );
 }
 

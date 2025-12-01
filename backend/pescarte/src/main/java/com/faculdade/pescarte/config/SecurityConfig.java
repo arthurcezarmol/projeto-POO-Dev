@@ -66,6 +66,9 @@ public class SecurityConfig {
                     // Permite acesso público ao endpoint de calcular preços (financeiro) (por enquanto)
                     .requestMatchers("/api/peixes").permitAll()
 
+                    // Permite acesso público ao endpoint de cadastrar usuário
+                    .requestMatchers("/api/registrar").permitAll()
+
                     // Para QUALQUER outra coisa, exige autenticação
                     .anyRequest().authenticated()
 

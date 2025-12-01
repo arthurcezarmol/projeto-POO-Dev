@@ -29,13 +29,8 @@ public class ClimaService {
 
     // Buscando o clima de uma cidade
     // OBS: DTO = Data Transfer Object
-<<<<<<< HEAD
-    public ClimaDTO buscarClima() {
-        String cidade = "Curitiba";
-=======
-    public ClimaDTO buscarClima(String nomeCidade) {
->>>>>>> staging
 
+    public ClimaDTO buscarClima(String nomeCidade) {
         // O UriComponentsBuilder ajuda a montar a URL de forma segura
         // Aqui está a estrutura da URL da API
         // Ao invés do tipo da variável ser String ela vai ser URI

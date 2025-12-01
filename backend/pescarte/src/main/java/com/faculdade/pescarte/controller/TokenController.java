@@ -5,6 +5,7 @@ import com.faculdade.pescarte.dto.LoginResponse;
 import com.faculdade.pescarte.dto.UserDTO;
 import com.faculdade.pescarte.model.Usuarios;
 import com.faculdade.pescarte.repository.UsuariosRepository;
+import com.faculdade.pescarte.service.UsuariosService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +36,20 @@ public class TokenController {
     // Injetando o Bean do algoritmo que vai criptografar as senhas
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    // Declarando a variável do Service
+    private final UsuariosService usuariosService;
+
     public TokenController(JwtEncoder jwtEncoder,
                            UsuariosRepository usuariosRepository,
-                           BCryptPasswordEncoder bCryptPasswordEncoder) {
+                           BCryptPasswordEncoder bCryptPasswordEncoder,
+                           UsuariosService usuariosService) {
         this.jwtEncoder = jwtEncoder;
         this.usuariosRepository = usuariosRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.usuariosService = usuariosService;
     }
 
-    // Criando o endpoint
+    // Criando o endpoint de login
     @PostMapping("api/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
        var usuario = usuariosRepository.findByUsername(loginRequest.username());
@@ -72,6 +78,25 @@ public class TokenController {
        var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
        return ResponseEntity.ok(new LoginResponse(jwtValue, expiresIn));
+    }
+
+    // Criando o endpoint de registar usuário
+    @PostMapping("api/registrar")
+    public ResponseEntity<?> criarUsuario(@RequestBody Usuarios novoUsuario) {
+        try {
+            // Chama o service que criptografa a senha e salva no banco
+            Usuarios usuarioSalvo = usuariosService.registrarUsuarios(novoUsuario);
+
+            // Retorna status 201 (Created) e o usuário criado
+            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvo);
+
+        } catch (RuntimeException e) {
+            // Se o Service lançar erro (ex: "Nome de usuário já existe"), retorna erro 400
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            // Qualquer outro erro genérico
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao criar usuário: " + e.getMessage());
+        }
     }
 
     // Retorna os dados do usuário autenticado no momento (baseado no token JWT).

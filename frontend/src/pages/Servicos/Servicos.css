@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.pagina-servicos {
+    max-width: 1200px;      /* Largura máxima */
+    width: 90%;             /* Largura relativa (para responsividade) */
+    margin: 0 auto;         /* Centraliza o bloco na página */
+    text-align: center;     /* Centraliza o texto (h1, p) e os filtros DENTRO do bloco */
+    margin-top: 20px;       /* Espaço no topo */
+}

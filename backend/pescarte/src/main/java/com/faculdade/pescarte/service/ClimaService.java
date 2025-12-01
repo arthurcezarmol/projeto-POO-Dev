@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
+
 @Service
 public class ClimaService {
     // Injetando o Bean "RestTemplate"
@@ -26,23 +28,28 @@ public class ClimaService {
     }
 
     // Buscando o clima de uma cidade
-    // Por enquanto vai ficar estática a cidade, depois vou passar a cidade como parametro
     // OBS: DTO = Data Transfer Object
+<<<<<<< HEAD
     public ClimaDTO buscarClima() {
         String cidade = "Curitiba";
+=======
+    public ClimaDTO buscarClima(String nomeCidade) {
+>>>>>>> staging
 
         // O UriComponentsBuilder ajuda a montar a URL de forma segura
         // Aqui está a estrutura da URL da API
-        String url = UriComponentsBuilder.fromHttpUrl(apiUrl)
-                .queryParam("q", cidade)
+        // Ao invés do tipo da variável ser String ela vai ser URI
+        URI uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
+                .queryParam("q", nomeCidade)
                 .queryParam("appid", apiKey)
                 .queryParam("units", "metric") // Para temperatura em Celsius
                 .queryParam("lang", "pt_br")   // Para descrição em português
-                .toUriString();
+                .build()       // build() FORÇA A CODIFICAÇÃO da string (ex: "Rio de Janeiro" -> "Rio%20de%20Janeiro")
+                .toUri();      // Converte para um objeto URI
 
         try {
             // Faz a chamada GET e pede o resultado como JsonNode
-            JsonNode resposta = restTemplate.getForObject(url, JsonNode.class);
+            JsonNode resposta = restTemplate.getForObject(uri, JsonNode.class);
 
             // Cria um novo objeto para clima
             ClimaDTO clima =  new ClimaDTO();

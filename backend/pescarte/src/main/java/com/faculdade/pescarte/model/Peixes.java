@@ -20,6 +20,9 @@ public class Peixes {
     @Column(name = "pesopescado")       // A coluna do banco se chama exatamente "pesopescado"
     Float pesoPescado;
 
-    @Column(name = "valorpescado")      // A coluna do banco se chama exatamente "valorpescado"
-    Float valorPescado;
+    @Column(name = "valor_pescado_atacado")      // A coluna do banco se chama exatamente "valor_pescado_atacado"
+    Float valorAtacado;
+
+    @Column(name = "valor_pescado_direto")      // A coluna do banco se chama exatamente "valor_pescado_direto"
+    Float valorDireto;
 }

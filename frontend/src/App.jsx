@@ -10,6 +10,7 @@ import './App.css'
 // Importando todas as páginas que são acessadas pela Navbar
 import Home from './pages/Home/Home'
 import Login from './pages/Login/Login'
+import Cadastro from './pages/Cadastro/Cadastro.jsx';
 import Servicos from './pages/Servicos/Servicos'
 import Clima from './pages/Clima/Clima'
 import Financeiro from './pages/Financeiro/Financeiro'
@@ -20,7 +21,7 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 function App() {
   return (
     <>
-      {/* 2. Coloque a Navbar FORA do <Routes> */}
+      {/* Coloque a Navbar FORA do <Routes> */}
       {/* Ela será renderizada uma vez e permanecerá na tela sempre */}
       <Navbar />
       <main>
@@ -30,6 +31,7 @@ function App() {
             {/* Cada Route define uma URL e o componente que será renderizado */}
             <Route path='/' element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/servicos" element={<Servicos />} />
             <Route path="/clima" element={<Clima />} />
             <Route path="/financeiro" element={<Financeiro />} />

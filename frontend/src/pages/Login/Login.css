@@ -1,0 +1,81 @@
+/* Login.css */
+
+/* Fundo da página inteira */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f2f5; /* Cinza claro */
+    font-family: 'Arial', sans-serif;
+}
+
+/* O Cartão Branco */
+.login-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-title {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 26px;
+}
+
+/* Formulário e Inputs */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* Garante que o padding não estoure a largura */
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    border-color: #28a745;
+    outline: none;
+}
+
+/* Botão */
+.login-btn {
+    margin-top: 10px;
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745; /* O VERDE */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #218838; /* Verde um pouco mais escuro ao passar o mouse */
+}

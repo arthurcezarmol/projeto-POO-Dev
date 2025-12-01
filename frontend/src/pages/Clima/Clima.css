@@ -11,6 +11,7 @@ main {
 .form-group {
     padding: 10px;
     margin: 10px;
+    text-align: center;
 }
 
 .form-control {

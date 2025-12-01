@@ -12,6 +12,9 @@ function Navbar () {
                 <li className="nav-item">
                     <NavLink to="/login" className="nav-link">Login</NavLink>
                 </li>
+                <li className='nav-item'>
+                    <NavLink to="/cadastro" className="nav-link">Cadastro</NavLink>
+                </li>
                 <li className="nav-item">
                     <NavLink to="/servicos" className="nav-link">Serviços</NavLink>
                 </li>

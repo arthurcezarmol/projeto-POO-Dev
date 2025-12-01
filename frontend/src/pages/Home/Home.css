@@ -1,0 +1,6 @@
+ul {
+  width: fit-content; /* A lista terá o tamanho do conteúdo */
+  margin: 0 auto;     /* Centraliza a lista na tela */
+  text-align: left;   /* O texto fica alinhado à esquerda DA LISTA (opcional) */
+  /*padding-left: 0;   /* Opcional: remove padding padrão se necessário */
+}

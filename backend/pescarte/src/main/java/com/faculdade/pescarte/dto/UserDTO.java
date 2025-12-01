@@ -13,5 +13,6 @@ public class UserDTO {
     private String nome;
     private String cargo;
     private int idade;
+    private String cidade;
     private String corporativa;
 }

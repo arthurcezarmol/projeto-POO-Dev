@@ -130,6 +130,7 @@ public class TokenController {
         userDTO.setNome(usuario.getNome());
         userDTO.setCargo(usuario.getCargo());
         userDTO.setIdade(usuario.getIdade());
+        userDTO.setCidade(usuario.getCidade());
         userDTO.setCorporativa(usuario.getCorporativa());
 
         // 5. Retornamos o DTO para o frontend

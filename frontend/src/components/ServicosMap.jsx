@@ -96,7 +96,7 @@ function ServicosMap() {
             <div className="filtros" style={{ marginBottom: '10px' }}>
                 <strong>Categorias:</strong>
                 
-                {/* 🚨 ATENÇÃO: Os valores aqui ('Gelo', 'Mecânico', 'Pesca')
+                {/* ATENÇÃO: Os valores aqui ('Gelo', 'Mecânico', 'Pesca', 'Sede')
                   devem ser IGUAIS ao que está na coluna 'categoria' do seu banco de dados.
                 */}
                 
@@ -112,6 +112,9 @@ function ServicosMap() {
                 {/* 2. NOVO BOTÃO ADICIONADO */}
                 {/* Para este funcionar, você precisa ter 'Pesca' na sua coluna 'categoria' no banco */}
                 <button onClick={() => setFiltro('Pesca')}>Artigos de Pesca</button>
+
+                {/* NOVO BOTÃO (SEDES) */}
+                <button onClick={() => setFiltro('Sede')}>Sedes do Pescarte</button>        {/* COLOCAR ISSO NO BANCO */}
             </div>
 
             {/* Mapa */}

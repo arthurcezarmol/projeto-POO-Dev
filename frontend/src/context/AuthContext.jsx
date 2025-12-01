@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import axios from 'axios'; // Ou a biblioteca que você usa para API
+import axios from 'axios'; 
 
 // 1. Criar o Contexto
 const AuthContext = createContext(null);
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
           // Adiciona o token ao header do axios para esta requisição
           axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
           
-          // Endpoint /api/me ou /api/user/info que retorna os dados do usuário logado a partir do token
+          // Endpoint /api/me que retorna os dados do usuário logado a partir do token
           const response = await axios.get('http://localhost:8080/api/me'); 
           setUser(response.data);       // Salva o UserDto ({ id, username, nome, corporativa})
         } catch (error) {

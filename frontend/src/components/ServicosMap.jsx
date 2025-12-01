@@ -88,8 +88,9 @@ function ServicosMap() {
                     onChange={(e) => setTermoBusca(e.target.value)}
                     placeholder="Digite um local (ex: Rio de Janeiro)"
                     style={{ padding: '8px', marginRight: '5px' }}
+                    className='input-busca'
                 />
-                <button type="submit" style={{ padding: '8px 12px' }}>Buscar</button>
+                <button type="submit" style={{ padding: '8px 12px' }} className='botao-busca'>Buscar</button>
             </form>
 
             {/* --- FILTROS ATUALIZADOS --- */}
@@ -100,21 +101,21 @@ function ServicosMap() {
                   devem ser IGUAIS ao que está na coluna 'categoria' do seu banco de dados.
                 */}
                 
-                <button onClick={() => setFiltro('Todos')}>Todos</button>
+                <button onClick={() => setFiltro('Todos')} className='botao-servico'>Todos</button>
                 
                 {/* Se no seu banco a categoria é 'Fábrica de Gelo', 
                   mude aqui para: onClick={() => setFiltro('Fábrica de Gelo')}
                   Ou, melhor, mude no banco para apenas 'Gelo'.
                 */}
-                <button onClick={() => setFiltro('Gelo')}>Fábricas de Gelo</button>
-                <button onClick={() => setFiltro('Mecânico')}>Mecânicos</button>
+                <button onClick={() => setFiltro('Gelo')} className='botao-servico'>Fábricas de Gelo</button>
+                <button onClick={() => setFiltro('Mecânico')} className='botao-servico'>Mecânicos</button>
                 
                 {/* 2. NOVO BOTÃO ADICIONADO */}
                 {/* Para este funcionar, você precisa ter 'Pesca' na sua coluna 'categoria' no banco */}
-                <button onClick={() => setFiltro('Pesca')}>Artigos de Pesca</button>
+                <button onClick={() => setFiltro('Pesca')} className='botao-servico'>Artigos de Pesca</button>
 
                 {/* NOVO BOTÃO (SEDES) */}
-                <button onClick={() => setFiltro('Sede')}>Sedes do Pescarte</button>        {/* COLOCAR ISSO NO BANCO */}
+                <button onClick={() => setFiltro('Sede')} className='botao-servico'>Sedes do Pescarte</button>        {/* COLOCAR ISSO NO BANCO */}
             </div>
 
             {/* Mapa */}

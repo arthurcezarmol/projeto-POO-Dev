@@ -1,9 +1,45 @@
 @charset "UTF-8";
 
+/* Animação suave de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .pagina-servicos {
     max-width: 1200px;      /* Largura máxima */
     width: 90%;             /* Largura relativa (para responsividade) */
     margin: 0 auto;         /* Centraliza o bloco na página */
     text-align: center;     /* Centraliza o texto (h1, p) e os filtros DENTRO do bloco */
     margin-top: 20px;       /* Espaço no topo */
+}
+
+.botao-servico {
+    margin: 5px;            /* Espaçamento entre os botões */
+    padding: 10px 15px;     /* Espaçamento interno dos botões */
+    border: none;           /* Remove borda padrão */
+    border-radius: 5px;     /* Bordas arredondadas */
+    background-color: #1e8bff; /* Cor de fundo azul */
+    color: white;           /* Cor do texto branca */
+    cursor: pointer;        /* Cursor de mãozinha ao passar por cima */
+    transition: background-color 0.3s; /* Transição suave para hover */
+}
+
+.botao-busca {
+    margin-left: 10px;      /* Espaçamento à esquerda */
+    padding: 8px 12px;      /* Espaçamento interno */
+    border: none;           /* Remove borda padrão */
+    border-radius: 5px;     /* Bordas arredondadas */
+    background-color: #1e8bff; /* Cor de fundo verde */
+    color: white;           /* Cor do texto branca */
+    cursor: pointer;        /* Cursor de mãozinha ao passar por cima */
+    transition: background-color 0.3s; /* Transição suave para hover */
+}
+
+.input-busca {
+    padding: 8px;           /* Espaçamento interno */
+    margin: 10px 0;        /* Espaçamento superior e inferior */
+    border: 1px solid #ccc; /* Borda cinza clara */
+    border-radius: 5px;     /* Bordas arredondadas */
+    width: 250px;           /* Largura fixa */
 }

@@ -79,3 +79,115 @@
 .login-btn:hover {
     background-color: #218838; /* Verde um pouco mais escuro ao passar o mouse */
 }
+
+/* --- ESTILOS DO CARTÃO DE PERFIL (USUÁRIO LOGADO) --- */
+
+.profile-card {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 15px; /* Bordas mais arredondadas */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra mais elegante */
+    width: 100%;
+    max-width: 350px; /* Um pouco mais estreito para parecer um cartão */
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeIn 0.5s ease;
+}
+
+/* Animação suave de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Avatar (Círculo colorido) */
+.profile-header {
+    margin-bottom: 20px;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #28a745, #218838); /* Gradiente Verde */
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px auto; /* Centraliza */
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+}
+
+.profile-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 22px;
+}
+
+.profile-role {
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Linha divisória */
+.divider {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+    margin: 20px 0;
+}
+
+/* Detalhes (Grid de informações) */
+.profile-details {
+    text-align: left;
+    margin-bottom: 30px;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.detail-item:last-child {
+    margin-bottom: 0;
+}
+
+.detail-item .label {
+    color: #777;
+    font-weight: 600;
+}
+
+.detail-item .value {
+    color: #333;
+    font-weight: bold;
+}
+
+/* Botão de Logout (Vermelho/Rosa para indicar saída) */
+.logout-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: white;
+    color: #dc3545; /* Vermelho */
+    border: 2px solid #dc3545;
+    border-radius: 30px; /* Botão estilo pílula */
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: #dc3545;
+    color: white;
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+}

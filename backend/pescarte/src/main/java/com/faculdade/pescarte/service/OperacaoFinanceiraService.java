@@ -56,4 +56,16 @@ public class OperacaoFinanceiraService {
                         op.getDataOperacao()))
                 .collect(Collectors.toList());
     }
+
+    public void deletarOperacao(Integer operacaoId, Integer userId) {
+        OperacaoFinanceira operacao = repository.findById(Long.valueOf(operacaoId))
+                .orElseThrow(() -> new RuntimeException("Operação não encontrada"));
+
+        // Verificação de Segurança: O usuário logado é dono dessa operação?
+        if (!operacao.getUsuario().getId().equals(userId)) {
+            throw new RuntimeException("Acesso negado: Você não pode deletar esta operação.");
+        }
+
+        repository.delete(operacao);
+    }
 }

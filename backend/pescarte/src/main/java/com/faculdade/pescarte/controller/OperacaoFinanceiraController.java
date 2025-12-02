@@ -37,4 +37,15 @@ public class OperacaoFinanceiraController {
         List<OperacaoFinanceiraDTO> historico = service.listarPorUsuario(userId);
         return ResponseEntity.ok(historico);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Integer id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userIdString = authentication.getName();
+        Integer userId = Integer.parseInt(userIdString);
+
+        service.deletarOperacao(id, userId);
+
+        return ResponseEntity.noContent().build(); // Retorna 204 (Sucesso sem conteúdo)
+    }
 }

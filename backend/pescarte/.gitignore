@@ -16,6 +16,10 @@ target/
 .springBeans
 .sts4-cache
 
+# Ignorar chaves de segurança
+app.key
+app.pub
+
 ### IntelliJ IDEA ###
 .idea
 *.iws

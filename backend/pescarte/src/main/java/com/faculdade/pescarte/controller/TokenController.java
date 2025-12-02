@@ -121,7 +121,7 @@ public class TokenController {
         }
 
         // 3. Buscamos a entidade 'Usuarios' completa do banco pelo ID
-        Usuarios usuario = usuariosRepository.findById(userId.longValue())
+        Usuarios usuario = usuariosRepository.findById((int) userId.longValue())
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com ID: " + userId));
 
         // 4. Mapeamos a entidade 'Usuarios' para UserDTO (só os dados seguros, sem senha por exemplo)

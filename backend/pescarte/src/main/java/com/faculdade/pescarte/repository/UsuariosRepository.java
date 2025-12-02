@@ -9,14 +9,18 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UsuariosRepository extends JpaRepository<Usuarios, Long> {
+public interface UsuariosRepository extends JpaRepository<Usuarios, Integer> {
 
-    /* USANDO JPA:
-        A QUERY CUSTOMIZADA PARA LOGIN:
-        O Spring "lê" o nome deste metodo e automaticamente escreve a query SQL: "SELECT * FROM usuarios WHERE nome = ?"
-        Optional<Usuarios> findByNome(String nome);         // Metodo para encontrar o usuario pelo nome
-        Optional<Usuarios> findByCargo(String cargo);       // Metodo para encontrar o usuario pelo cargo
-    */
+    /*
+     * USANDO JPA:
+     * A QUERY CUSTOMIZADA PARA LOGIN:
+     * O Spring "lê" o nome deste metodo e automaticamente escreve a query SQL:
+     * "SELECT * FROM usuarios WHERE nome = ?"
+     * Optional<Usuarios> findByNome(String nome); // Metodo para encontrar o
+     * usuario pelo nome
+     * Optional<Usuarios> findByCargo(String cargo); // Metodo para encontrar o
+     * usuario pelo cargo
+     */
 
     // Usando JPQL:
     /*

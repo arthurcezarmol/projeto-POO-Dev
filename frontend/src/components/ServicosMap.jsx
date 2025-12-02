@@ -3,13 +3,13 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 
 // ... (Componente MoverMapa fica igual)
 function MoverMapa({ center, zoom }) {
-  const map = useMap();
-  useEffect(() => {
-    if (center) {
-      map.setView(center, zoom);
-    }
-  }, [center, zoom, map]);
-  return null;
+    const map = useMap();
+    useEffect(() => {
+        if (center) {
+            map.setView(center, zoom);
+        }
+    }, [center, zoom, map]);
+    return null;
 }
 
 // Posição inicial padrão
@@ -45,18 +45,16 @@ function ServicosMap() {
             return true; // Mostra todos
         }
 
-        // 1. ADICIONAMOS ESTE CONSOLE.LOG
-        // Abra o console (F12) e veja o que aparece aqui!
+        // ADICIONEI ESTE CONSOLE.LOG PARA DEBUG
         console.log(`Comparando: Filtro='${filtro.toLowerCase()}' vs DB Categoria='${servico.categoria ? servico.categoria.toLowerCase() : 'N/A'}'`);
 
         // A comparação real (garante que servico.categoria não é nulo)
-        // A NOVA LINHA (mais flexível):
         return servico.categoria && servico.categoria.toLowerCase().startsWith(filtro.toLowerCase());
     });
 
     // Função de busca (handleBusca)
     const handleBusca = async (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
         if (!termoBusca) return;
 
         try {
@@ -82,11 +80,11 @@ function ServicosMap() {
         <div>
             {/* Formulário de Busca */}
             <form onSubmit={handleBusca} style={{ marginBottom: '10px' }}>
-                <input 
-                    type="text" 
+                <input
+                    type="text"
                     value={termoBusca}
                     onChange={(e) => setTermoBusca(e.target.value)}
-                    placeholder="Digite um local (ex: Rio de Janeiro)"
+                    placeholder="Digite um local (ex: Arraial do Cabo)"
                     style={{ padding: '8px', marginRight: '5px' }}
                     className='input-busca'
                 />
@@ -96,32 +94,43 @@ function ServicosMap() {
             {/* --- FILTROS ATUALIZADOS --- */}
             <div className="filtros" style={{ marginBottom: '10px' }}>
                 <strong>Categorias:</strong>
-                
-                {/* ATENÇÃO: Os valores aqui ('Gelo', 'Mecânico', 'Pesca', 'Sede')
-                  devem ser IGUAIS ao que está na coluna 'categoria' do seu banco de dados.
-                */}
-                
-                <button onClick={() => setFiltro('Todos')} className='botao-servico'>Todos</button>
-                
-                {/* Se no seu banco a categoria é 'Fábrica de Gelo', 
-                  mude aqui para: onClick={() => setFiltro('Fábrica de Gelo')}
-                  Ou, melhor, mude no banco para apenas 'Gelo'.
-                */}
-                <button onClick={() => setFiltro('Gelo')} className='botao-servico'>Fábricas de Gelo</button>
-                <button onClick={() => setFiltro('Mecânico')} className='botao-servico'>Mecânicos</button>
-                
-                {/* 2. NOVO BOTÃO ADICIONADO */}
-                {/* Para este funcionar, você precisa ter 'Pesca' na sua coluna 'categoria' no banco */}
-                <button onClick={() => setFiltro('Pesca')} className='botao-servico'>Artigos de Pesca</button>
+                {/* Mantém a classe original 'botao-servico'
+                  E adiciona 'active' SE for o selecionado */}
+                <button
+                    onClick={() => setFiltro('Todos')}
+                    className={`botao-servico ${filtro === 'Todos' ? 'active' : ''}`}>
+                    Todos
+                </button>
 
-                {/* NOVO BOTÃO (SEDES) */}
-                <button onClick={() => setFiltro('Sede')} className='botao-servico'>Sedes do Pescarte</button>        {/* COLOCAR ISSO NO BANCO */}
+                <button
+                    onClick={() => setFiltro('Fábrica de Gelo')}
+                    className={`botao-servico ${filtro === 'Fábrica de Gelo' ? 'active' : ''}`}>
+                    Fábricas de Gelo
+                </button>
+
+                <button
+                    onClick={() => setFiltro('Mecânico')}
+                    className={`botao-servico ${filtro === 'Mecânico' ? 'active' : ''}`}>
+                    Mecânicos
+                </button>
+
+                <button
+                    onClick={() => setFiltro('Artigos de Pesca')}
+                    className={`botao-servico ${filtro === 'Artigos de Pesca' ? 'active' : ''}`}>
+                    Artigos de Pesca
+                </button>
+
+                <button
+                    onClick={() => setFiltro('Sede')}
+                    className={`botao-servico ${filtro === 'Sede' ? 'active' : ''}`}>
+                    Sedes do Pescarte
+                </button>
             </div>
 
             {/* Mapa */}
-            <MapContainer 
-                center={centroMapa} 
-                zoom={zoomMapa} 
+            <MapContainer
+                center={centroMapa}
+                zoom={zoomMapa}
                 style={{ height: '600px', width: '100%' }}
             >
                 <MoverMapa center={centroMapa} zoom={zoomMapa} />
@@ -129,7 +138,7 @@ function ServicosMap() {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
-                
+
                 {servicosFiltrados.map(servico => (
                     <Marker key={servico.id} position={[servico.latitude, servico.longitude]}>
                         <Popup>

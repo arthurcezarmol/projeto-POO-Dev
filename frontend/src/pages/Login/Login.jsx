@@ -41,6 +41,27 @@ const Login = () => {
     // porque 'isAuthenticated' e 'user' vão mudar no contexto.
   };
 
+  // Função para deletar uma transação do histórico
+  const handleDelete = async (id) => {
+    // Pergunta de confirmação básica
+    if (!window.confirm("Tem certeza que deseja deletar esta transação?")) {
+      return;
+    }
+
+    try {
+      // Chama o endpoint de delete que criamos
+      await axios.delete(`http://localhost:8080/api/financeiro/${id}`);
+
+      // Atualiza a lista na tela removendo o item deletado (sem precisar recarregar)
+      setHistorico(prevHistorico => prevHistorico.filter(item => item.id !== id));
+
+      alert("Transação removida com sucesso!");
+    } catch (error) {
+      console.error("Erro ao deletar:", error);
+      alert("Erro ao tentar deletar a transação.");
+    }
+  };
+
   // 4. Renderização Condicional
 
   // SE ESTIVER AUTENTICADO E TIVER INFORMAÇÕES DO USUÁRIO (NÃO FOR NULO)...
@@ -84,16 +105,31 @@ const Login = () => {
             {historico.length === 0 ? (
               <p>Nenhuma venda registrada.</p>
             ) : (
-              <ul style={{ listStyle: 'none', padding: 0, maxHeight: '200px', overflowY: 'auto' }}>
+              <ul className="history-list">
                 {historico.map(op => (
-                  <li key={op.id} style={{ borderBottom: '1px solid #eee', padding: '10px 0' }}>
-                    <div><strong>{op.nomePeixe}</strong> ({op.tipoVenda})</div>
-                    <div style={{ fontSize: '0.9em', color: '#666' }}>
-                      {new Date(op.dataOperacao).toLocaleString()}
+                  // Usamos a classe 'history-item' aqui
+                  <li key={op.id} className="history-item">
+
+                    {/* Detalhes da transação */}
+                    <div className="item-details">
+                      <strong>{op.nomePeixe} <span style={{ fontWeight: 'normal', fontSize: '0.9em' }}>({op.tipoVenda})</span></strong>
+                      <div className="item-date">
+                        {new Date(op.dataOperacao).toLocaleString()}
+                      </div>
+                      <div className="item-price">
+                        R$ {op.valorTotal.toFixed(2)}
+                      </div>
                     </div>
-                    <div style={{ color: 'green', fontWeight: 'bold' }}>
-                      R$ {op.valorTotal.toFixed(2)}
-                    </div>
+
+                    {/* Botão de Deletar com classe 'delete-btn' */}
+                    <button
+                      onClick={() => handleDelete(op.id)}
+                      className="delete-btn"
+                      title="Remover transação"
+                    >
+                      🗑️ Deletar
+                    </button>
+
                   </li>
                 ))}
               </ul>

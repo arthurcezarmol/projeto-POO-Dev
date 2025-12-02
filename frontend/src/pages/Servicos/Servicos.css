@@ -25,6 +25,15 @@
     transition: background-color 0.3s; /* Transição suave para hover */
 }
 
+/* Quando o botão tiver a classe "active", ele muda de cor */
+.botao-servico.active {
+    background-color: #0056b3; /* Um azul bem mais escuro que o #1e8bff */
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.3); /* Sombra interna (efeito de profundidade) */
+    transform: scale(0.95); /* Diminui levemente para dar sensação de clique */
+    font-weight: bold;
+    border: 2px solid white; /* Uma borda branca ajuda a destacar do fundo */
+}
+
 .botao-busca {
     margin-left: 10px;      /* Espaçamento à esquerda */
     padding: 8px 12px;      /* Espaçamento interno */

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 
 import './Login.css';
@@ -11,6 +12,18 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(''); // Estado para msg de erro
+
+  // State para o histórico
+  const [historico, setHistorico] = useState([]);
+
+  // Fetch do histórico quando o usuário logar
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      axios.get('http://localhost:8080/api/financeiro/historico')
+        .then(res => setHistorico(res.data))
+        .catch(err => console.error("Erro ao buscar histórico:", err));
+    }
+  }, [isAuthenticated, user]);
 
   // 3. Handler do formulário
   const handleSubmit = async (e) => {
@@ -61,6 +74,30 @@ const Login = () => {
               <span className="label">Corporativa:</span>
               <span className="value">{user.corporativa || '-'}</span>
             </div>
+          </div>
+
+          <hr className="divider" />
+
+          {/* Histórico de Operações */}
+          <div className="profile-history">
+            <h3>Histórico de Vendas</h3>
+            {historico.length === 0 ? (
+              <p>Nenhuma venda registrada.</p>
+            ) : (
+              <ul style={{ listStyle: 'none', padding: 0, maxHeight: '200px', overflowY: 'auto' }}>
+                {historico.map(op => (
+                  <li key={op.id} style={{ borderBottom: '1px solid #eee', padding: '10px 0' }}>
+                    <div><strong>{op.nomePeixe}</strong> ({op.tipoVenda})</div>
+                    <div style={{ fontSize: '0.9em', color: '#666' }}>
+                      {new Date(op.dataOperacao).toLocaleString()}
+                    </div>
+                    <div style={{ color: 'green', fontWeight: 'bold' }}>
+                      R$ {op.valorTotal.toFixed(2)}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           {/* Botão de Logout */}

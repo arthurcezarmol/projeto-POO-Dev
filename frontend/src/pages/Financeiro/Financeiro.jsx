@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from '../../context/AuthContext';
 
 import './Financeiro.css';
 
 function Financeiro() {
+    const { user, isAuthenticated } = useAuth();
     const [estoque, setEstoque] = useState([]);
-    
+
     // --- NOVO ESTADO: MODO DE VENDA ---
     // Começa como 'direto' por padrão
-    const [modoVenda, setModoVenda] = useState('direto'); 
+    const [modoVenda, setModoVenda] = useState('direto');
 
     const [idPeixeSelecionado, setIdPeixeSelecionado] = useState("");
     const [pesoParaVenda, setPesoParaVenda] = useState("");
@@ -37,16 +39,16 @@ function Financeiro() {
     const calcularVenda = (e) => {
         e.preventDefault();
         const peixe = estoque.find(p => p.id === parseInt(idPeixeSelecionado));
-        
+
         if (!peixe) {
             alert("Selecione um peixe!");
             return;
         }
 
         const peso = parseFloat(pesoParaVenda);
-        
+
         // USA A FUNÇÃO INTELIGENTE PARA PEGAR O PREÇO
-        const precoUnitario = getPrecoAtual(peixe); 
+        const precoUnitario = getPrecoAtual(peixe);
         const total = precoUnitario * peso;
 
         setResultado({
@@ -56,6 +58,21 @@ function Financeiro() {
             total: total,
             modo: modoVenda // (Opcional) Para saber qual modo foi usado
         });
+
+        // SALVAR NO BANCO SE ESTIVER LOGADO
+        if (isAuthenticated && user) {
+            const payload = {
+                tipoVenda: modoVenda,
+                nomePeixe: peixe.tipoPescado,
+                peso: peso,
+                precoUnitario: precoUnitario,
+                valorTotal: total
+            };
+
+            axios.post('http://localhost:8080/api/financeiro/salvar', payload)
+                .then(res => console.log("Operação salva com sucesso!", res.data))
+                .catch(err => console.error("Erro ao salvar operação:", err));
+        }
     };
 
     return (
@@ -63,23 +80,23 @@ function Financeiro() {
             <h1>💰 Simulador de Vendas</h1>
 
             <div style={containerStyle}>
-                
+
                 {/* --- SELEÇÃO DE MODO DE VENDA --- */}
                 <div style={{ marginBottom: '20px', padding: '10px', background: '#fff', borderRadius: '5px' }}>
                     <strong>Tipo de Venda: </strong>
                     <label style={{ marginRight: '15px', cursor: 'pointer' }}>
-                        <input 
-                            type="radio" 
-                            value="direto" 
-                            checked={modoVenda === 'direto'} 
+                        <input
+                            type="radio"
+                            value="direto"
+                            checked={modoVenda === 'direto'}
                             onChange={() => setModoVenda('direto')}
                         /> Venda Direta (Varejo)
                     </label>
                     <label style={{ cursor: 'pointer' }}>
-                        <input 
-                            type="radio" 
-                            value="atacado" 
-                            checked={modoVenda === 'atacado'} 
+                        <input
+                            type="radio"
+                            value="atacado"
+                            checked={modoVenda === 'atacado'}
                             onChange={() => setModoVenda('atacado')}
                         /> Atacado
                     </label>
@@ -88,8 +105,8 @@ function Financeiro() {
                 <form onSubmit={calcularVenda}>
                     <div style={{ marginBottom: '10px' }}>
                         <label>Peixe:</label>
-                        <select 
-                            value={idPeixeSelecionado} 
+                        <select
+                            value={idPeixeSelecionado}
                             onChange={e => setIdPeixeSelecionado(e.target.value)}
                             style={inputStyle}
                         >
@@ -108,9 +125,9 @@ function Financeiro() {
 
                     <div style={{ marginBottom: '10px' }}>
                         <label>Peso (Kg):</label>
-                        <input 
-                            type="number" 
-                            step="0.1" 
+                        <input
+                            type="number"
+                            step="0.1"
                             value={pesoParaVenda}
                             onChange={e => setPesoParaVenda(e.target.value)}
                             style={inputStyle}

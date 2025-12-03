@@ -3,3 +3,16 @@
     max-width: 900px;
     margin: 2rem auto;
 }
+
+/* Faz a div principal ocupar a altura total da tela */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* 100% da altura da viewport */
+}
+
+/* Faz o conteúdo do meio crescer para ocupar o espaço vazio */
+.content-wrap {
+  flex: 1; 
+  /* Isso empurra o footer para baixo se a página tiver pouco conteúdo */
+}

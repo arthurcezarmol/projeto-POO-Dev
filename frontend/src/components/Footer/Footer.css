@@ -1,0 +1,117 @@
+/* Footer.css */
+
+.footer-container {
+    background: linear-gradient(to right, #1a4bcf, #1e8bff); /* Azul degradê */
+    color: white;
+    padding: 40px 20px 20px 20px;
+    margin-top: auto; /* Empurra o footer para baixo se a pág for curta */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1); /* Sombra invertida (para cima) */
+}
+
+.footer-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Para celular */
+    gap: 20px;
+}
+
+.footer-logo-img {
+    height: 60px;           /* Define a altura fixa */
+    width: auto;            /* A largura se ajusta sozinha */
+    margin-bottom: 10px;    /* Espaço para o slogan embaixo */
+    
+    /* Opcional: Filtro para deixar a logo branca se ela for colorida e não contrastar bem */
+    /* filter: brightness(0) invert(1); */ 
+}
+
+.logo-section p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    max-width: 300px;       /* Evita que o texto estique muito */
+}
+
+/* Redes Sociais */
+.social-section h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-link {
+    color: white;
+    font-size: 1.5rem;
+    transition: transform 0.3s, color 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.social-link:hover {
+    color: #a8d5ff; /* Azul clarinho no hover */
+    transform: translateY(-3px);
+}
+
+/* Linha Divisória */
+.footer-divider {
+    border: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 30px auto 20px auto;
+    max-width: 1000px;
+}
+
+/* Parte Inferior (Créditos) */
+.footer-bottom {
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.9;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.dev-credit {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.dev-credit strong {
+    color: #fff;
+    font-weight: 700;
+}
+
+.dev-credit a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.dev-credit a:hover {
+    color: #a8d5ff;
+}
+
+/* Responsividade para Celular */
+@media (max-width: 600px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-logo-img {
+        margin: 0 auto 10px auto; /* Centraliza a logo no celular */
+    }
+}

@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
 import './App.css'
 
 // Importando todas as páginas que são acessadas pela Navbar
@@ -20,10 +21,11 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 function App() {
   return (
-    <>
+    <div className='app-container'>
       {/* Coloque a Navbar FORA do <Routes> */}
       {/* Ela será renderizada uma vez e permanecerá na tela sempre */}
       <Navbar />
+
       <main>
         {/* O componente Routes define a área onde as páginas serão trocadas */}
         <AuthProvider>
@@ -39,7 +41,9 @@ function App() {
           </Routes>
         </AuthProvider>
       </main>
-    </>
+
+      <Footer /> {/* O Footer fica aqui embaixo, fora das rotas */}
+    </div>
   );
 }
 

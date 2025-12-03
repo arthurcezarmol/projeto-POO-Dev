@@ -45,79 +45,69 @@ function Cadastro() {
     };
 
     return (
-        <div style={containerStyle}>
-            <h2>📝 Criar Nova Conta</h2>
-            <form onSubmit={handleSubmit} style={formStyle}>
-                
-                {/* Nome */}
-                <div style={inputGroupStyle}>
-                    <label>Nome de Usuário:</label>
-                    <input type="text" name="nome" value={formData.nome} onChange={handleChange} required style={inputStyle}/>
-                </div>
-
-                {/* Senha */}
-                <div style={inputGroupStyle}>
-                    <label>Senha:</label>
-                    <input type="password" name="senha" value={formData.senha} onChange={handleChange} required style={inputStyle}/>
-                </div>
-
-                {/* Idade e Gênero (lado a lado) */}
-                <div style={{ display: 'flex', gap: '10px' }}>
-                    <div style={inputGroupStyle}>
-                        <label>Idade:</label>
-                        <input type="number" name="idade" value={formData.idade} onChange={handleChange} required style={inputStyle}/>
+        <div className='containerOutside'>
+            <div className='containerStyle'>
+                <h2 className='titulo'>📝 Criar Nova Conta</h2>
+                <form onSubmit={handleSubmit} className='formStyle'>
+            
+                    {/* Nome */}
+                    <div className='inputGroupStyle'>
+                        <label>Nome de Usuário:</label>
+                        <input type="text" name="nome" value={formData.nome} onChange={handleChange} required className='inputStyle'/>
                     </div>
-                    <div style={inputGroupStyle}>
-                        <label>Gênero:</label>
-                        <select name="genero" value={formData.genero} onChange={handleChange} style={inputStyle}>
-                            <option value="">Selecione...</option>
-                            <option value="M">Masculino</option>
-                            <option value="F">Feminino</option>
-                            <option value="Outro">Outro</option>
-                        </select>
+
+                    {/* Senha */}
+                    <div className='inputGroupStyle'>
+                        <label>Senha:</label>
+                        <input type="password" name="senha" value={formData.senha} onChange={handleChange} required className='inputStyle'/>
                     </div>
-                </div>
 
-                {/* Cargo e Renda */}
-                <div style={inputGroupStyle}>
-                    <label>Cargo:</label>
-                    <input type="text" name="cargo" value={formData.cargo} onChange={handleChange} style={inputStyle}/>
-                </div>
-                <div style={inputGroupStyle}>
-                    <label>Renda Mensal (R$):</label>
-                    <input type="number" step="0.01" name="renda" value={formData.renda} onChange={handleChange} style={inputStyle}/>
-                </div>
+                    {/* --- MUDANÇA AQUI: Usamos a classe 'form-row' em vez de style inline --- */}
+                    <div className='form-row'>
+                        <div className='inputGroupStyle'>
+                            <label>Idade:</label>
+                            <input type="number" name="idade" value={formData.idade} onChange={handleChange} required className='inputStyle'/>
+                        </div>
+                        <div className='inputGroupStyle'>
+                            <label>Gênero:</label>
+                            <select name="genero" value={formData.genero} onChange={handleChange} className='inputStyle'>
+                                <option value="">Selecione...</option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Feminino</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                    </div>
 
-                {/* Cidade e Corporativa */}
-                <div style={inputGroupStyle}>
-                    <label>Cidade:</label>
-                    <input type="text" name="cidade" value={formData.cidade} onChange={handleChange} style={inputStyle}/>
-                </div>
-                <div style={inputGroupStyle}>
-                    <label>Corporativa (Empresa/Associação):</label>
-                    <input type="text" name="corporativa" value={formData.corporativa} onChange={handleChange} required style={inputStyle}/>
-                </div>
+                    {/* Cargo */}
+                    <div className='inputGroupStyle'>
+                        <label>Cargo:</label>
+                        <input type="text" name="cargo" value={formData.cargo} onChange={handleChange} className='inputStyle'/>
+                    </div>
 
-                <button type="submit" style={buttonStyle}>Registrar-se</button>
-            </form>
+                    {/* Renda */}
+                    <div className='inputGroupStyle'>
+                        <label>Renda Mensal (R$):</label>
+                        <input type="number" step="0.01" name="renda" value={formData.renda} onChange={handleChange} className='inputStyle'/>
+                    </div>
+
+                    {/* Cidade */}
+                    <div className='inputGroupStyle'>
+                        <label>Cidade:</label>
+                        <input type="text" name="cidade" value={formData.cidade} onChange={handleChange} className='inputStyle'/>
+                    </div>
+
+                    {/* Corporativa */}
+                    <div className='inputGroupStyle'>
+                        <label>Corporativa (Empresa/Associação):</label>
+                        <input type="text" name="corporativa" value={formData.corporativa} onChange={handleChange} required className='inputStyle'/>
+                    </div>
+
+                    <button type="submit" className='buttonStyle'>Registrar-se</button>
+                </form>
+            </div>
         </div>
     );
 }
-
-// --- Estilos Simples (CSS in JS) ---
-const containerStyle = {
-    maxWidth: '500px',
-    margin: '50px auto',
-    padding: '20px',
-    boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-    borderRadius: '8px',
-    backgroundColor: '#fff',
-    fontFamily: 'Arial, sans-serif'
-};
-
-const formStyle = { display: 'flex', flexDirection: 'column', gap: '15px' };
-const inputGroupStyle = { display: 'flex', flexDirection: 'column', textAlign: 'left', width: '100%' };
-const inputStyle = { padding: '10px', borderRadius: '5px', border: '1px solid #ccc', marginTop: '5px' };
-const buttonStyle = { padding: '12px', backgroundColor: '#28a745', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' };
 
 export default Cadastro;

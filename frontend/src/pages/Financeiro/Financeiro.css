@@ -1,5 +1,151 @@
-/* Animação suave de entrada */
+@charset "utf-8";
+
+/* --- 1. ESTRUTURA GERAL --- */
+.pagina-financeiro {
+    max-width: 600px;
+    width: 90%;
+    margin: 40px auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #444;
+    animation: fadeIn 0.8s ease;
+    text-align: center;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+.financeiro-titulo {
+    font-size: 2.2rem;
+    color: #1e8bff; /* Azul da marca */
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+/* --- 2. O CARTÃO BRANCO (Fundo do formulário) --- */
+.card-principal {
+    background-color: white;
+    border-radius: 30px;
+    padding: 35px;
+    /* Sombra elegante para destacar do fundo */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* --- 3. SELEÇÃO DE MODO (Varejo vs Atacado) --- */
+.grupo-modos {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    background-color: #f0f8ff; /* Fundo leve para agrupar */
+    padding: 10px;
+    border-radius: 50px;
+}
+
+/* Esconde a bolinha original do rádio para estilizar o label */
+.grupo-modos input[type="radio"] {
+    accent-color: #1e8bff; /* Pinta a bolinha de azul caso apareça */
+    margin-right: 8px;
+    transform: scale(1.2); /* Aumenta um pouco a bolinha */
+    cursor: pointer;
+}
+
+.label-radio {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+/* --- 4. INPUTS E SELECTS --- */
+.form-calculadora {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #1e8bff;
+    margin-left: 10px;
+}
+
+/* Classe unificada para o SELECT e o INPUT de número */
+.input-estilizado {
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #ddd;
+    border-radius: 50px; /* Pílula */
+    font-size: 1rem;
+    outline: none;
+    background-color: #fff;
+    transition: all 0.3s;
+    box-sizing: border-box; /* Garante que o padding não estoure a largura */
+}
+
+.input-estilizado:focus {
+    border-color: #1e8bff;
+    box-shadow: 0 0 0 4px rgba(30, 139, 255, 0.1);
+}
+
+/* --- 5. BOTÃO CALCULAR --- */
+.btn-calcular {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 50px;
+    background-color: #1e8bff;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(30, 139, 255, 0.3);
+}
+
+.btn-calcular:hover {
+    background-color: #166bca;
+    transform: translateY(-2px);
+}
+
+/* --- 6. RESULTADO --- */
+.resultado-card {
+    margin-top: 30px;
+    background-color: #e8f5e9; /* Fundo verde bem clarinho */
+    border: 1px solid #c8e6c9;
+    border-radius: 25px;
+    padding: 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+.resultado-card h3 {
+    color: #2e7d32; /* Verde escuro */
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.resultado-card p {
+    font-size: 1.1rem;
+    margin: 5px 0;
+    color: #333;
+}
+
+.total-valor {
+    color: #2e7d32; /* Verde Dinheiro */
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-top: 10px;
 }

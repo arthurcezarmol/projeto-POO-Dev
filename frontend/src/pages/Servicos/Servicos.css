@@ -1,54 +1,128 @@
 @charset "UTF-8";
 
-/* Animação suave de entrada */
+/* --- 1. CONFIGURAÇÕES GERAIS DO BLOCO --- */
+.pagina-servicos {
+    max-width: 1000px;          /* Reduzi um pouco para o texto não ficar muito esticado */
+    width: 90%;
+    margin: 40px auto;          /* Mais margem no topo */
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte mais limpa */
+    color: #444;                /* Cinza suave para o texto (melhor que preto puro) */
+    animation: fadeIn 0.8s ease; /* Aplica a animação de entrada */
+}
+
+/* Animação suave */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-.pagina-servicos {
-    max-width: 1200px;      /* Largura máxima */
-    width: 90%;             /* Largura relativa (para responsividade) */
-    margin: 0 auto;         /* Centraliza o bloco na página */
-    text-align: center;     /* Centraliza o texto (h1, p) e os filtros DENTRO do bloco */
-    margin-top: 20px;       /* Espaço no topo */
+/* --- 2. TÍTULOS E TEXTOS --- */
+.pagina-servicos h1 {
+    color: #1e8bff;             /* Azul da marca */
+    margin-bottom: 15px;
+    font-size: 2.2rem;
 }
 
+.pagina-servicos p {
+    line-height: 1.6;           /* Espaçamento entre linhas para facilitar leitura */
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #666;
+}
+
+/* --- 3. LISTA DE CIDADES (Transformando em Tags) --- */
+.pagina-servicos ul {
+    list-style: none;           /* Remove as bolinhas */
+    padding: 0;
+    margin: 20px auto 40px auto;
+    display: flex;              /* Coloca lado a lado */
+    flex-wrap: wrap;            /* Quebra linha se precisar */
+    justify-content: center;    /* Centraliza as tags */
+    gap: 10px;                  /* Espaço entre elas */
+}
+
+.pagina-servicos li {
+    background-color: #f0f8ff;  /* Fundo azul bem clarinho */
+    color: #1e8bff;             /* Texto azul */
+    padding: 8px 16px;
+    border-radius: 25px;        /* Bordas bem redondas */
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 1px solid rgba(30, 139, 255, 0.2); /* Borda sutil */
+    transition: transform 0.2s;
+}
+
+.pagina-servicos li:hover {
+    transform: translateY(-2px); /* Pequeno efeito ao passar o mouse na cidade */
+    background-color: #e6f2ff;
+}
+
+/* --- 4. BOTÕES DE FILTRO (Serviços) --- */
+/* Nota: Esses botões devem estar dentro do <ServicosMap> ou outro componente */
 .botao-servico {
-    margin: 5px;            /* Espaçamento entre os botões */
-    padding: 10px 15px;     /* Espaçamento interno dos botões */
-    border: none;           /* Remove borda padrão */
-    border-radius: 5px;     /* Bordas arredondadas */
-    background-color: #1e8bff; /* Cor de fundo azul */
-    color: white;           /* Cor do texto branca */
-    cursor: pointer;        /* Cursor de mãozinha ao passar por cima */
-    transition: background-color 0.3s; /* Transição suave para hover */
+    margin: 5px;
+    padding: 10px 20px;         /* Botão mais "gordinho" */
+    border: 1px solid #1e8bff;  /* Borda azul */
+    border-radius: 50px;        /* Pílula completa */
+    background-color: white;    /* Fundo branco inicial (estilo Clean) */
+    color: #1e8bff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-/* Quando o botão tiver a classe "active", ele muda de cor */
+.botao-servico:hover {
+    background-color: #1e8bff;  /* Fica azul ao passar o mouse */
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(30, 139, 255, 0.3);
+}
+
+/* Estado Ativo */
 .botao-servico.active {
-    background-color: #0056b3; /* Um azul bem mais escuro que o #1e8bff */
-    box-shadow: inset 0 3px 5px rgba(0,0,0,0.3); /* Sombra interna (efeito de profundidade) */
-    transform: scale(0.95); /* Diminui levemente para dar sensação de clique */
-    font-weight: bold;
-    border: 2px solid white; /* Uma borda branca ajuda a destacar do fundo */
+    background-color: #1e8bff;
+    color: white;
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.2);
+}
+
+/* --- 5. ÁREA DE BUSCA --- */
+.input-busca {
+    padding: 12px 20px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 50px;        /* Input arredondado */
+    width: 280px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+.input-busca:focus {
+    border-color: #1e8bff;      /* Borda azul ao digitar */
+    box-shadow: 0 0 0 3px rgba(30, 139, 255, 0.1);
 }
 
 .botao-busca {
-    margin-left: 10px;      /* Espaçamento à esquerda */
-    padding: 8px 12px;      /* Espaçamento interno */
-    border: none;           /* Remove borda padrão */
-    border-radius: 5px;     /* Bordas arredondadas */
-    background-color: #1e8bff; /* Cor de fundo verde */
-    color: white;           /* Cor do texto branca */
-    cursor: pointer;        /* Cursor de mãozinha ao passar por cima */
-    transition: background-color 0.3s; /* Transição suave para hover */
+    margin-left: 10px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 50px;        /* Botão arredondado */
+    background-color: #1e8bff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-.input-busca {
-    padding: 8px;           /* Espaçamento interno */
-    margin: 10px 0;        /* Espaçamento superior e inferior */
-    border: 1px solid #ccc; /* Borda cinza clara */
-    border-radius: 5px;     /* Bordas arredondadas */
-    width: 250px;           /* Largura fixa */
+.botao-busca:hover {
+    background-color: #166bca;  /* Azul um pouco mais escuro */
+    transform: scale(1.05);
+}
+
+/* Linha divisória */
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+    margin: 30px 0;
 }

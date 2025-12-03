@@ -1,46 +1,54 @@
+/* Navbar.css */
+
+/* 1. O Container Principal */
 .navbar {
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    background-color: #2f6cde;
-    padding: 2rem 1rem;
-    color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Centraliza o menu na tela */
+  padding: 20px 0;
+  background: transparent; 
+  margin-top: 20px;
 }
 
-.nav-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-}
-
+/* 2. A Lista (ul) */
 .nav-menu {
-    display: flex;
-    list-style: none;   /* Retira as bolinhas da lista */
-    margin: 0;
-    padding: 0;
+  display: flex;           /* Coloca os itens um ao lado do outro */
+  list-style: none;        /* Remove as bolinhas da lista */
+  margin: 0;
+  padding: 0;
+  align-items: center;     /* Alinha verticalmente */
+  flex-wrap: wrap;         /* Permite quebra de linha em telas menores */
+  justify-content: center;
 }
 
+/* 3. O Item da Lista (li) */
 .nav-item {
-    background-color: rgb(86, 86, 185);
-    padding: 0.8rem;
-    margin-left: 1.5rem;    /* Espaçamento entre os itens do menu */
-    border-radius: 8px;
+  margin: 0 5px; /* Espaçamento horizontal entre os botões */
 }
 
+/* 4. O Link (NavLink) - ESTADO NORMAL */
 .nav-link {
-    color: white;
-    text-decoration: none;      /* Tira o underline */
-    font-size: 1.1rem;
-    transition: color 0.3s ease;    /* Efeito suave na mudança de cor (do hover) */
+  text-decoration: none;
+  color: #5a5a5a;          
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
 }
 
+/* 5. Estado Hover */
 .nav-link:hover {
-    color: #72a6f9;
+  background-color: rgba(30, 139, 255, 0.1); 
+  color: #1e8bff; /* O texto fica azul ao passar o mouse */
+  transform: translateY(-2px);
 }
 
+/* 6. Estado Ativo  */
 .nav-link.active {
-  color: #72a6f9;
-  border-bottom: 2px solid #61dafb;
-  padding-bottom: 4px;
+  background-color: #ffffff;
+  color: #1e8bff;           /* Mantém o texto azul */
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra para destacar do fundo */
 }

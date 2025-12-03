@@ -3,3 +3,86 @@
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+h2.titulo {
+    padding: 5px;
+    padding-bottom: 10px;
+    color: #1e8bff;             /* Azul da marca */
+}
+
+.containerOutside {
+    background-color: #f0f2f5; /* Cinza claro */
+    padding: 10px;
+}
+
+.containerStyle {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    background-color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.inputGroupStyle {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+}
+
+.inputStyle {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+}
+
+.formStyle {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.buttonStyle {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    background-color: #1e8bff;  /* Azul da marca */
+    color: white;
+    border: none;
+    border-radius: 50px;        /* Botão redondo */
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(30, 139, 255, 0.3);
+}
+
+/* --- Classe para alinhar campos lado a lado --- */
+.form-row {
+    display: flex;          /* Coloca os itens na horizontal */
+    gap: 15px;              /* Espaço entre Idade e Gênero */
+    width: 100%;            /* Garante que o grupo ocupe a largura total */
+}
+
+/* Força os grupos de input (inputGroupStyle) dentro da linha a crescerem */
+.form-row .inputGroupStyle {
+    flex: 1;                /* Faz cada um ocupar 50% do espaço */
+    width: auto;            /* Reseta a largura para o flex funcionar */
+}
+
+/* Para deixar os inputs redondinhos igual o resto do site */
+.inputStyle {
+    padding: 12px;
+    border-radius: 50px;    /* Mudança para Pílula */
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+.inputStyle:focus {
+    border-color: #1e8bff;  /* Azul ao clicar */
+}

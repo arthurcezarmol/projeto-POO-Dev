@@ -1,10 +1,21 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';      // Importa o axios (para conectar front e o back)
 import './Clima.css';
-import ImagemMain from "../../imagens/imagem-pescador-main.jpg"
+
+// --- Importando os ícones ---
+import { 
+    WiDaySunny, 
+    WiCloudy, 
+    WiRain, 
+    WiThunderstorm, 
+    WiSnow, 
+    WiFog 
+} from 'react-icons/wi'; // Pacote de clima
+import { BsDropletFill, BsWind } from 'react-icons/bs'; // Pacote de ícones gerais
 
 function Clima () {
-    // Lógica para decidir qual classe CSS usar (para temperatura) (AINDA NÃO ESTÁ IMPLEMENTADA)
+    
+    // Lógica para decidir qual classe CSS usar (para temperatura)
     const getClasseTemperatura = (temp) => {
         if (temp > 28) {
             return 'temp-alta';         // Acima de 28°C é quente
@@ -15,24 +26,34 @@ function Clima () {
         return 'temp-media';            // Entre 15°C e 28°C é normal
     };
 
-    // Lógica para decidir qual vai ser a direção do vento baseado no valor recebido (VERIFICAR LÓGICA)
-    const getClasseDirecaoVento = (dir) => {
-        switch (dir) {
-            case 0 || 360:
-                return "Norte";
-                break;
-            case 90:
-                return "Leste";
-                break;
-            case 180:
-                return "Sul";
-                break;
-            case 270:
-                return "Oeste";
-                break;
-        }
-    }
+    // --- ALTERAÇÃO: Lógica Corrigida para a direção do vento ---
+    const getNomeDirecaoVento = (dir) => {
+        if (dir >= 337.5 || dir < 22.5) return "Norte";
+        if (dir >= 22.5 && dir < 67.5) return "Nordeste";
+        if (dir >= 67.5 && dir < 112.5) return "Leste";
+        if (dir >= 112.5 && dir < 157.5) return "Sudeste";
+        if (dir >= 157.5 && dir < 202.5) return "Sul";
+        if (dir >= 202.5 && dir < 247.5) return "Sudoeste";
+        if (dir >= 247.5 && dir < 292.5) return "Oeste";
+        if (dir >= 292.5 && dir < 337.5) return "Noroeste";
+        return "Variável";
+    };
 
+    // --- Função para escolher o Ícone Principal ---
+    const getIconePrincipal = (descricao) => {
+        if (!descricao) return <WiDaySunny size={80} color="#fbc531" />;
+        
+        const desc = descricao.toLowerCase();
+
+        if (desc.includes('chuva') || desc.includes('garoa')) return <WiRain size={80} color="#00a8ff" />;
+        if (desc.includes('trovoada')) return <WiThunderstorm size={80} color="#485460" />;
+        if (desc.includes('nuvem') || desc.includes('nublado')) return <WiCloudy size={80} color="#7f8fa6" />;
+        if (desc.includes('neve')) return <WiSnow size={80} color="#dff9fb" />;
+        if (desc.includes('neblina') || desc.includes('nevoeiro')) return <WiFog size={80} color="#dcdde1" />;
+        
+        // Padrão (Sol)
+        return <WiDaySunny size={80} color="#fbc531" />;
+    };
 
     // 1. Cria um "estado" para guardar os dados do clima quando chegarem
     const [clima, setClima] = useState(null);       // Guarda os estados do clima
@@ -49,7 +70,7 @@ function Clima () {
 
     // 2. useEffect é um "hook" que roda o código DEPOIS que o componente aparece na tela.
     // O [] vazio no final significa "rode apenas uma vez".
-    // ALTERAÇÕES: ESTE HOOK AGORA RODA TODA VEZ QUE 'cidadeBuscada' MUDAR!
+    // ESTE HOOK RODA TODA VEZ QUE 'cidadeBuscada' MUDAR
     useEffect(() => {
         // Não faz nada se nenhuma cidade foi buscada (evita rodar na primeira vez)
         if (cidadeBuscada === '') {
@@ -90,36 +111,35 @@ function Clima () {
 
     // 6. SUCESSO: Mostra os dados que vieram do Spring!
     return (
-        <>
-            <main>
-            
-                <h1 className='clima-titulo-principal'>Clima</h1>
+        /* Usamos a classe container para não bugar a Home */
+        <main className="pagina-clima-container">
 
-                {/* Conectamos o formulário ao React:
-                 - onSubmit chama nossa função handleSubmit
-                 - O <input> usa 'value' e 'onChange'
-                */}
-                <form onSubmit={handleSubmit}>
-                    <div className='form-group'>
-                        <input type="text" 
-                        className='form-control'
-                        placeholder='Digite o nome da cidade'
-                        required
-                        value={cidadeInput}     // O valor do input é controlado pelo React
-                        onChange={(e) => setCidadeInput(e.target.value)}    // Atualiza o estado a cada tecla
-                        // e - evento que está acontecendo (no caso é change) | 
-                        // target é o elemento que desencadeia o evento (no caso é input) |
-                        // value é o elemento do input onChange
-                        />
-                    </div>
-                    <button type='submit' className='button-submit'>Descobrir clima</button>
-                </form>
-            </main>
+            <h1 className='clima-titulo-principal'>Clima</h1>
+
+            {/* Conectamos o formulário ao React:
+             - onSubmit chama nossa função handleSubmit
+             - O <input> usa 'value' e 'onChange'
+            */}
+            <form onSubmit={handleSubmit} className="form-busca">
+                <div className='form-group'>
+                    <input type="text" 
+                    className='form-control'
+                    placeholder='Digite o nome da cidade'
+                    required
+                    value={cidadeInput}     // O valor do input é controlado pelo React
+                    onChange={(e) => setCidadeInput(e.target.value)}    // Atualiza o estado a cada tecla
+                    // e - evento que está acontecendo (no caso é change) | 
+                    // target é o elemento que desencadeia o evento (no caso é input) |
+                    // value é o elemento do input onChange
+                    />
+                </div>
+                <button type='submit' className='button-submit'>Descobrir clima</button>
+            </form>
 
             {/* --- ÁREA DO RESULTADO --- */}
 
             {/* Mostra "Carregando..." durante a busca */}
-            {loading && <p>Carregando clima...</p>}             {/* Dentro do JSX, qualquer código JS tem que estar entre {} */}
+            {loading && <p className="loading-msg">Carregando clima...</p>}             {/* Dentro do JSX, qualquer código JS tem que estar entre {} */}
 
             {/* Mostra o erro, se houver */}
             {erro && <p className='erro-clima'>{erro}</p>}
@@ -128,22 +148,47 @@ function Clima () {
             {/* O nome das variáveis tem que ser O MESMO das variáveis no meu climaDTO!!! */}
             {clima && (
                 <div className='clima-container'>
-                    <h1 className='clima-titulo'>Clima em: {clima.cidade} - {clima.pais}</h1>
+                    <h1 className='clima-titulo'>Clima em: <br/> {clima.cidade} - {clima.pais}</h1>
+                    
+                    {/* --- Ícone Principal Animado --- */}
+                    <div className="icone-destaque">
+                        {getIconePrincipal(clima.descricao)}
+                    </div>
+
                     <p className='clima-info'>
                         Temperatura: 
                         <span className={getClasseTemperatura(clima.temperatura)}>
-                            {clima.temperatura}°C
+                            {Math.round(clima.temperatura)}°C
                         </span>
                     </p>
-                    <p className='clima-info'>Umidade: {clima.umidade}%</p>
-                    {/*<p className='clima-info'>Pressão: {clima.pressão} Pascal</p>*/}
-                    <p className='clima-info'>Descrição: {clima.descricao}</p>
-                    <p className='clima-info'>Velocidade do vento: {clima.velocidadeVento} Km/h</p>
-                    <p className='clima-info'>Direção do vento: {clima.direcaoVento}°</p>
-                    <p className='clima-info'>Nebulosidade: {clima.nebulosidade}%</p>
+
+                    {/* --- Descrição estilizada --- */}
+                    <p className="descricao-texto">{clima.descricao}</p>
+
+                    {/* --- Detalhes com ícones pequenos --- */}
+                    <div className='clima-detalhes'>
+                        
+                        <div className="linha-info">
+                            <div className="info-icon"><BsDropletFill size={20} color="#1e8bff"/></div>
+                            <strong>Umidade:</strong> 
+                            <span>{clima.umidade}%</span>
+                        </div>
+
+                        <div className="linha-info">
+                            <div className="info-icon"><BsWind size={20} color="#a5b1c2"/></div>
+                            <strong>Vento:</strong> 
+                            <span>{clima.velocidadeVento} Km/h ({getNomeDirecaoVento(clima.direcaoVento)})</span>
+                        </div>
+
+                        <div className="linha-info">
+                            <div className="info-icon"><WiCloudy size={24} color="#7f8fa6"/></div>
+                            <strong>Nebulosidade:</strong> 
+                            <span>{clima.nebulosidade}%</span>
+                        </div>
+                    </div>
                 </div>
             )}
-        </>
+        </main>
     );
 }
 

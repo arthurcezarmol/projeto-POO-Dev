@@ -76,15 +76,15 @@ function Financeiro() {
     };
 
     return (
-        <div style={{ padding: '20px', fontFamily: 'Arial' }}>
-            <h1>💰 Simulador de Vendas</h1>
+        <div className="pagina-financeiro">
+            <h1 className="financeiro-titulo">💰 Simulador de Vendas</h1>
 
-            <div style={containerStyle}>
+            <div className="card-principal">
 
                 {/* --- SELEÇÃO DE MODO DE VENDA --- */}
-                <div style={{ marginBottom: '20px', padding: '10px', background: '#fff', borderRadius: '5px' }}>
-                    <strong>Tipo de Venda: </strong>
-                    <label style={{ marginRight: '15px', cursor: 'pointer' }}>
+                <div className="grupo-modos">
+                    <strong style={{ alignSelf: 'center', marginRight: '10px' }}>Tipo de Venda: </strong>
+                    <label className="label-radio">
                         <input
                             type="radio"
                             value="direto"
@@ -92,7 +92,7 @@ function Financeiro() {
                             onChange={() => setModoVenda('direto')}
                         /> Venda Direta (Varejo)
                     </label>
-                    <label style={{ cursor: 'pointer' }}>
+                    <label className="label-radio">
                         <input
                             type="radio"
                             value="atacado"
@@ -102,13 +102,13 @@ function Financeiro() {
                     </label>
                 </div>
 
-                <form onSubmit={calcularVenda}>
-                    <div style={{ marginBottom: '10px' }}>
+                <form onSubmit={calcularVenda} className="form-calculadora">
+                    <div className="input-group">
                         <label>Peixe:</label>
                         <select
                             value={idPeixeSelecionado}
                             onChange={e => setIdPeixeSelecionado(e.target.value)}
-                            style={inputStyle}
+                            className="input-estilizado"
                         >
                             <option value="">Selecione...</option>
                             {estoque.map(peixe => {
@@ -123,37 +123,31 @@ function Financeiro() {
                         </select>
                     </div>
 
-                    <div style={{ marginBottom: '10px' }}>
+                    <div className="input-group">
                         <label>Peso (Kg):</label>
                         <input
                             type="number"
                             step="0.1"
                             value={pesoParaVenda}
                             onChange={e => setPesoParaVenda(e.target.value)}
-                            style={inputStyle}
+                            className="input-estilizado"
                         />
                     </div>
 
-                    <button type="submit" style={buttonStyle}>Calcular</button>
+                    <button type="submit" className="btn-calcular">Calcular</button>
                 </form>
             </div>
 
             {resultado && (
-                <div style={resultadoStyle}>
+                <div className="resultado-card">
                     <h3>Resultado ({resultado.modo === 'atacado' ? 'Atacado' : 'Venda Direta'})</h3>
                     <p>Peixe: <strong>{resultado.nome}</strong></p>
                     <p>Preço Unitário: R$ {resultado.precoUnitario.toFixed(2)}</p>
-                    <h2 style={{ color: 'green' }}>Total: R$ {resultado.total.toFixed(2)}</h2>
+                    <h2 className="total-valor">Total: R$ {resultado.total.toFixed(2)}</h2>
                 </div>
             )}
         </div>
     );
 }
-
-// Estilos simples (pode manter os seus)
-const containerStyle = { background: '#f4f4f4', padding: '20px', borderRadius: '8px' };
-const inputStyle = { display: 'block', width: '100%', padding: '8px', marginBottom: '10px' };
-const buttonStyle = { background: '#007bff', color: '#fff', border: 'none', padding: '10px 20px', cursor: 'pointer' };
-const resultadoStyle = { marginTop: '20px', padding: '15px', background: '#e8f5e9', border: '1px solid green', borderRadius: '5px' };
 
 export default Financeiro;

@@ -97,8 +97,6 @@ const Login = () => {
             </div>
           </div>
 
-          <hr className="divider" />
-
           {/* Histórico de Operações */}
           <div className="profile-history">
             <h3>Histórico de Vendas</h3>
@@ -112,7 +110,8 @@ const Login = () => {
 
                     {/* Detalhes da transação */}
                     <div className="item-details">
-                      <strong>{op.nomePeixe} <span style={{ fontWeight: 'normal', fontSize: '0.9em' }}>({op.tipoVenda})</span></strong>
+                      {/* Substituí o style inline por uma classe 'item-type' */}
+                      <strong>{op.nomePeixe} <span className="item-type">({op.tipoVenda})</span></strong>
                       <div className="item-date">
                         {new Date(op.dataOperacao).toLocaleString()}
                       </div>
@@ -127,7 +126,7 @@ const Login = () => {
                       className="delete-btn"
                       title="Remover transação"
                     >
-                      🗑️ Deletar
+                      🗑️
                     </button>
 
                   </li>
@@ -135,6 +134,8 @@ const Login = () => {
               </ul>
             )}
           </div>
+
+          <hr className="divider" />
 
           {/* Botão de Logout */}
           <button onClick={logout} className="logout-btn">
@@ -175,6 +176,9 @@ const Login = () => {
               required
             />
           </div>
+
+          {/* Mostra erro se houver */}
+          {error && <p style={{color: '#dc3545', marginBottom: '10px'}}>{error}</p>}
 
           <button type="submit" className="login-btn">
             Entrar

@@ -1,107 +1,189 @@
 @charset "utf-8";
 
-/* Animação suave de entrada */
+/* --- 1. CONFIGURAÇÃO GERAL --- */
+.pagina-clima-container {
+    max-width: 600px;
+    width: 90%;
+    margin: 40px auto;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #444;
+    background-color: transparent; /* Removemos o fundo cinza total para ficar clean */
+    animation: fadeIn 0.8s ease;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-main {
-    background: url(imagens/imagem-pescador-main.jpg);
-    background-size: cover;
-    background-position: center;
-    justify-content: center;
-    text-align: center;
-    animation: fadeIn 0.5s ease;
-}
-
-.form-group {
-    padding: 10px;
-    margin: 10px;
-    text-align: center;
-}
-
-.form-control {
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.button-submit {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: rgb(166, 160, 255);
-}
-
-/* Estilo para o container principal */
-.clima-container {
-    background-color: #f4f8ff; /* Um azul bem claro */
-    border: 1px solid #d1e3ff;
-    border-radius: 8px;        /* Bordas arredondadas */
-    padding: 20px;             /* Espaçamento interno */
-    margin: 20px auto;         /* Centraliza o card na página */
-    max-width: 500px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Uma sombra leve */
-    font-family: Arial, sans-serif;
-}
-
-/* Estilo para o título */
-.clima-titulo {
-    color: #0056b3; /* Um azul escuro */
-    border-bottom: 2px solid #0056b3; /* Uma linha embaixo */
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
+/* --- 2. TÍTULO PRINCIPAL --- */
 .clima-titulo-principal {
-    color: #0056b3;
+    font-size: 2.5rem;
+    color: #1e8bff;             /* Azul da marca */
+    margin-bottom: 30px;
+    font-weight: 700;
 }
 
-/* Estilo para as informações gerais */
+/* --- 3. FORMULÁRIO --- */
+/* Estiliza o form para alinhar tudo ao centro */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;                  /* Espaço entre os elementos */
+    margin-bottom: 30px;
+}
+
+/* Removemos margens extras do wrapper do input */
+.form-group {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* O INPUT (Antigo .form-control) */
+.form-control {
+    padding: 15px 25px;
+    width: 100%;
+    max-width: 350px;           
+    border: 1px solid #ddd;
+    border-radius: 50px;        /* Pílula */
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.form-control:focus {
+    border-color: #1e8bff;
+    box-shadow: 0 0 0 4px rgba(30, 139, 255, 0.1);
+}
+
+/* O BOTÃO (Antigo .button-submit) */
+.button-submit {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 50px;        /* Pílula */
+    background-color: #1e8bff;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(30, 139, 255, 0.3);
+}
+
+.button-submit:hover {
+    background-color: #166bca;
+    transform: translateY(-2px);
+}
+
+/* --- 4. O CARD DE RESULTADO --- */
+.clima-container {
+    background-color: white;
+    border-radius: 30px;        /* Bordas bem redondas */
+    padding: 30px;
+    margin-top: 20px;
+    max-width: 90%;            /* Ocupa o espaço do main */
+    margin: 0 auto;
+    /* Efeito de Cartão Flutuante */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Título da Cidade dentro do card */
+.clima-titulo {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+    border-bottom: 1px solid #f0f0f0; /* Linha divisória suave */
+    padding-bottom: 15px;
+}
+
+/* Linhas de informação (Temperatura, Umidade, etc) */
 .clima-info {
-    font-size: 16px;
-    color: #333; /* Cor de texto padrão */
-    line-height: 1.5; /* Espaçamento entre linhas */
-    padding: 3px;
-}
-
-/* Estilo específico para a descrição (em itálico) (REVISAR ISSO) */
-/*.clima-descricao {
-    font-style: italic;
+    font-size: 1.1rem;
     color: #555;
-    line-height: 1.5;
-}*/
+    margin: 10px 0;
+    display: flex;              /* Para alinhar ícones se quiser */
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
 
-/* Estilo para a mensagem de erro */
+/* --- 5. CORES DA TEMPERATURA (Span) --- */
+/* Essas classes aumentam a fonte da temperatura para destacar */
+.temp-baixa { 
+    color: #00a8ff; 
+    font-weight: 800;
+    font-size: 1.4rem; /* Um pouco maior que o texto normal */
+} 
+
+.temp-media { 
+    color: #fbc531; 
+    font-weight: 800; 
+    font-size: 1.4rem;
+} 
+
+.temp-alta { 
+    color: #e84118; 
+    font-weight: 800; 
+    font-size: 1.4rem;
+}
+
+/* --- 6. MENSAGEM DE ERRO --- */
 .erro-clima {
-    color: #D8000C; /* Vermelho */
-    background-color: #FFD2D2; /* Fundo vermelho claro */
-    border: 1px solid #D8000C;
-    padding: 10px;
-    border-radius: 5px;
-    margin: 20px auto;
-    max-width: 500px;
+    background-color: #ffeaea;
+    color: #d63031;
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid #ff7675;
+    margin-top: 20px;
+    font-weight: 500;
 }
 
-/* Estes estilos vão se aplicar APENAS ao <span>
-  Eles vão sobrescrever a cor do .clima-info */
+/* --- NOVOS ESTILOS PARA OS ÍCONES --- */
 
-.temp-baixa {
-    color: #007bff; /* Um azul frio */
-    font-weight: bold;
-    padding-left: 5px; /* Só para dar um espacinho */
+/* Centraliza o ícone grande do topo */
+.icone-destaque {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    animation: fadeIn 1s ease;
 }
 
-.temp-media {
-    color: #28a745; /* Um verde neutro */
-    font-weight: bold;
-    padding-left: 5px;
+/* Descrição textual logo abaixo da temperatura */
+.descricao-texto {
+    font-size: 1.2rem;
+    text-transform: capitalize; /* Primeira letra maiúscula */
+    color: #666;
+    margin-bottom: 25px;
+    font-style: italic;
 }
 
-.temp-alta {
-    color: #dc3545; /* Um vermelho quente */
-    font-weight: bold;
-    padding-left: 5px;
+/* Ajuste na linha de detalhes para alinhar ícone e texto */
+.linha-info {
+    display: flex;
+    align-items: center; /* Centraliza verticalmente */
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 1.05rem;
+}
+
+/* Containerzinho do ícone pequeno à esquerda */
+.info-icon {
+    width: 35px; /* Largura fixa para alinhar os textos */
+    display: flex;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+/* Remove a borda do último item */
+.linha-info:last-child {
+    border-bottom: none;
 }

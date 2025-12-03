@@ -20,9 +20,9 @@ function Footer() {
                 <div className="footer-section social-section">
                     <h3>Siga-nos</h3>
                     <div className="social-icons">
-                        <a href="https://www.instagram.com/peapescarte/" className="social-link"><FaInstagram /></a>
-                        <a href="https://www.facebook.com/peapescarte/" className="social-link"><FaFacebook /></a>
-                        <a href="https://www.youtube.com/PEAPescarte" className='social-link'><FaYoutube /></a>
+                        <a href="https://www.instagram.com/peapescarte/" target='_blank' className="social-link"><FaInstagram /></a>
+                        <a href="https://www.facebook.com/peapescarte/" target='_blank' className="social-link"><FaFacebook /></a>
+                        <a href="https://www.youtube.com/PEAPescarte" target='_blank' className='social-link'><FaYoutube /></a>
                     </div>
                 </div>
             </div>

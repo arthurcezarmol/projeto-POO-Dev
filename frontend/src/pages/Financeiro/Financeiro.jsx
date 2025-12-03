@@ -80,6 +80,7 @@ function Financeiro() {
             <h1 className="financeiro-titulo">💰 Simulador de Vendas</h1>
 
             <div className="card-principal">
+                <h1 className='financeiro-subtitulo'>Para salvar suas transações certifique-se de estar logado.</h1>
 
                 {/* --- SELEÇÃO DE MODO DE VENDA --- */}
                 <div className="grupo-modos">

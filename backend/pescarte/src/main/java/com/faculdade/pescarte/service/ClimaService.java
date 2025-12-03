@@ -63,7 +63,7 @@ public class ClimaService {
             // Retorna o DTO (clima)
             return clima;
 
-        } catch (Exception e) {     // COLOCAR MAIS TRATAMENTO DE ERROS DEPOIS
+        } catch (Exception e) {
             // Tratamento de erros simples
             e.printStackTrace();
             throw new RuntimeException("Erro ao buscar dados do clima: " + e.getMessage());

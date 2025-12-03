@@ -26,7 +26,7 @@ public class AdminUserConfig implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        var roleAdmin = usuariosRepository.findByCargo("ROLE_ADMIN");           // VER ESSA LINHA
+        var roleAdmin = usuariosRepository.findByCargo("ROLE_ADMIN");
 
         var userAdmin = usuariosRepository.findByCargo("Desenvolvedor");
 

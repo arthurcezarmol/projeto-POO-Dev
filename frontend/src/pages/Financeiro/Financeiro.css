@@ -23,6 +23,13 @@
     font-weight: 700;
 }
 
+.financeiro-subtitulo {
+    font-size: 1rem;
+    color: #585858;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
 /* --- 2. O CARTÃO BRANCO (Fundo do formulário) --- */
 .card-principal {
     background-color: white;

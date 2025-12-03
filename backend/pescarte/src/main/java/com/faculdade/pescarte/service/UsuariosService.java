@@ -24,16 +24,7 @@ public class UsuariosService {
         this.passwordEncoder = passwordEncoder;         // Recebe o Bean de SecurityConfig
     }
 
-    /*
-    // Metodo que vai registrar o Usuário
-    public Usuarios registrarUsuarios(String nome, String senha){
-        String senhaCriptografada = passwordEncoder.encode(senha);          // Pega a senha do metodo e criptografa ela
-        Usuarios usuario = new Usuarios();
-        return usuariosRepository.save(usuario);
-    }
-    */
-
-    // O metodo agora recebe o objeto INTEIRO 'Usuarios', não apenas strings soltas.
+    // Recebe o objeto INTEIRO 'Usuarios', não apenas strings soltas.
     @Transactional
     public Usuarios registrarUsuarios(Usuarios novoUsuario) {
 

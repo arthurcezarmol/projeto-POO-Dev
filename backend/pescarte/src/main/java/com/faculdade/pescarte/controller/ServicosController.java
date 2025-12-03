@@ -19,7 +19,7 @@ public class ServicosController {
     }
 
     // Endpoint para listar todos os serviços
-    // O frontend (mapa.js) chamará este metodo
+    // O frontend (mapa) chamará este metodo
     // URL: GET http://localhost:8080/api/servicos
     @GetMapping
     public List<Servicos> listarTodosServicos() {
